@@ -1,1 +1,1 @@
-synthetic_scenario=approve
+synthetic_scenario=abstain
