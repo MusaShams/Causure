@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure artifact attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/-]{2,127}$"
+        },
+        "media_type": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]{0,126}/[a-z0-9][a-z0-9!#$&^_.+-]{0,126}$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "artifact_id",
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "producer_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/-]{2,127}$"
+        },
+        "key_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/-]{2,127}$"
+        }
+      },
+      "required": [
+        "producer_id",
+        "key_id"
+      ]
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "class_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/-]{2,127}$"
+        },
+        "retain_until": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        }
+      },
+      "required": [
+        "class_id",
+        "retain_until"
+      ]
+    },
+    "revocation_list_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/-]{2,127}$"
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "enum": [
+            "ed25519"
+          ]
+        },
+        "canonicalization": {
+          "enum": [
+            "causure-json-v1"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{86}$"
+        }
+      },
+      "required": [
+        "algorithm",
+        "canonicalization",
+        "value"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "artifact",
+    "producer",
+    "issued_at",
+    "expires_at",
+    "retention",
+    "revocation_list_id",
+    "signature"
+  ]
+}

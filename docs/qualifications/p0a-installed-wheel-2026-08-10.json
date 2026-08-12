@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "qualification": "p0a-installed-wheel-engineering-audit",
+  "performed_at": "2026-08-10T16:21:48Z",
+  "result": "passed",
+  "environment": {
+    "operating_system": "Microsoft Windows 10.0.26200",
+    "architecture": "X64",
+    "python_version": "3.13.5",
+    "installation": "fresh virtual environment with --no-index local wheel install"
+  },
+  "distribution": {
+    "filename": "proofbeforepatch-0.4.0a17-py3-none-any.whl",
+    "byte_count": 322169,
+    "sha256": "709410ac79e55bf9cb10b50662aa1e4cab54230f0061dd85ce487bd0465f6cd4"
+  },
+  "observations": {
+    "installed_module_source": "fresh-venv/Lib/site-packages/proofbeforepatch/__init__.py",
+    "elapsed_seconds_after_install": 0.794,
+    "short_help_exposed_three_command_path": true,
+    "short_help_excluded_enterprise_command_catalog": true,
+    "outcomes": [
+      "approve/patch",
+      "reject/do_not_patch"
+    ],
+    "terminal_explained_both_decisions": true,
+    "human_readable_report_created": true,
+    "human_readable_report_read_and_validated": true,
+    "schema_or_json_editing_required": false,
+    "cloud_credentials_provided": false,
+    "docker_or_service_required": false
+  },
+  "limitations": [
+    "This was a maintainer-executed isolated engineering audit, not an unfamiliar-user usability test.",
+    "The fresh virtual environment and working directory were created on the development host rather than a separate clean machine.",
+    "The Markdown report was read and validated programmatically; human editor or file-browser navigation was not tested.",
+    "This record therefore does not satisfy the final P0-A human exit criterion."
+  ]
+}

@@ -1,0 +1,6 @@
+# Runtime-only generated evidence
+artifacts/
+trusted-generation/
+github/
+*.sqlite3
+*.sqlite3-*

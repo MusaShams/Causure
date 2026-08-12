@@ -1,0 +1,11 @@
+**
+!build/
+!build/quota-pilot/
+!build/quota-pilot/wheels/
+!build/quota-pilot/wheels/waitress-3.0.2-py3-none-any.whl
+!deploy/
+!deploy/openai-quota-pilot/
+!deploy/openai-quota-pilot/Dockerfile
+!deploy/openai-quota-pilot/Dockerfile.edge
+!dist/
+!dist/causure-0.4.0a18-py3-none-any.whl

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure OpenAI-compatible quota service host configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "quota_configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "database": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "busy_timeout_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60000
+        }
+      },
+      "required": [
+        "path",
+        "busy_timeout_ms"
+      ]
+    },
+    "secrets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "admin_token_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "provider_api_key_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        }
+      },
+      "required": [
+        "admin_token_path",
+        "provider_api_key_path"
+      ]
+    },
+    "server": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "implementation": {
+          "const": "waitress"
+        },
+        "version": {
+          "const": "3.0.2"
+        },
+        "listen_host": {
+          "enum": [
+            "0.0.0.0",
+            "127.0.0.1",
+            "::",
+            "::1"
+          ]
+        },
+        "listen_port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "trusted_external_scheme": {
+          "const": "https"
+        },
+        "threads": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "connection_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "backlog": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "channel_timeout_seconds": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 3600
+        },
+        "max_request_header_bytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65536
+        }
+      },
+      "required": [
+        "implementation",
+        "version",
+        "listen_host",
+        "listen_port",
+        "trusted_external_scheme",
+        "threads",
+        "connection_limit",
+        "backlog",
+        "channel_timeout_seconds",
+        "max_request_header_bytes"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "quota_configuration",
+    "database",
+    "secrets",
+    "server"
+  ]
+}

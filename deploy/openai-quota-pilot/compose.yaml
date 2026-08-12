@@ -1,0 +1,158 @@
+name: causure-openai-quota-pilot
+
+services:
+  quota-core:
+    image: ${CAUSURE_QUOTA_CORE_IMAGE:?Set CAUSURE_QUOTA_CORE_IMAGE to the exact local image ID or repository digest}
+    pull_policy: never
+    container_name: openai-quota-core
+    command: ["openai-quota-serve", "/run/configs/openai-quota-host.json"]
+    init: true
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges=true"]
+    pids_limit: 128
+    mem_limit: 256m
+    cpus: 1.0
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m,mode=700,uid=65532,gid=65532
+    configs:
+      - source: quota_configuration
+        target: /run/configs/openai-quota.json
+      - source: quota_host_configuration
+        target: /run/configs/openai-quota-host.json
+    secrets:
+      - source: openai_provider_api_key
+        target: openai_provider_api_key
+      - source: openai_quota_admin_token
+        target: openai_quota_admin_token
+    volumes:
+      - quota-data:/var/lib/causure
+    networks:
+      - quota-backend
+      - provider-egress
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -I
+        - -c
+        - "import urllib.request; r=urllib.request.urlopen('http://127.0.0.1:8080/readyz', timeout=2); raise SystemExit(0 if r.status == 200 else 1)"
+      interval: 10s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
+
+  worker-edge:
+    image: ${CAUSURE_QUOTA_EDGE_IMAGE:?Set CAUSURE_QUOTA_EDGE_IMAGE to the exact local hardened-edge image ID or repository digest}
+    pull_policy: never
+    container_name: openai-quota
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+    init: true
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges=true"]
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.5
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=8m,mode=700,uid=65532,gid=65532
+      - /data:rw,noexec,nosuid,nodev,size=8m,mode=700,uid=65532,gid=65532
+      - /config:rw,noexec,nosuid,nodev,size=8m,mode=700,uid=65532,gid=65532
+    configs:
+      - source: worker_caddyfile
+        target: /etc/caddy/Caddyfile
+    secrets:
+      - source: quota_server_certificate
+        target: quota_server_certificate
+      - source: quota_server_private_key
+        target: quota_server_private_key
+    networks:
+      - quota-worker
+      - quota-backend
+    depends_on:
+      quota-core:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
+
+  admin-edge:
+    image: ${CAUSURE_QUOTA_EDGE_IMAGE:?Set CAUSURE_QUOTA_EDGE_IMAGE to the exact local hardened-edge image ID or repository digest}
+    pull_policy: never
+    container_name: openai-quota-admin
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+    init: true
+    read_only: true
+    user: "65532:65532"
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges=true"]
+    pids_limit: 64
+    mem_limit: 128m
+    cpus: 0.5
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=8m,mode=700,uid=65532,gid=65532
+      - /data:rw,noexec,nosuid,nodev,size=8m,mode=700,uid=65532,gid=65532
+      - /config:rw,noexec,nosuid,nodev,size=8m,mode=700,uid=65532,gid=65532
+    configs:
+      - source: admin_caddyfile
+        target: /etc/caddy/Caddyfile
+    secrets:
+      - source: quota_server_certificate
+        target: quota_server_certificate
+      - source: quota_server_private_key
+        target: quota_server_private_key
+    ports:
+      - "127.0.0.1:${CAUSURE_QUOTA_ADMIN_PORT:-9443}:9443/tcp"
+    networks:
+      - quota-backend
+      - quota-admin-control
+    depends_on:
+      quota-core:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
+
+configs:
+  quota_configuration:
+    file: ${CAUSURE_QUOTA_PILOT_STATE:?Set CAUSURE_QUOTA_PILOT_STATE to the protected absolute state directory}/config/openai-quota.json
+  quota_host_configuration:
+    file: ${CAUSURE_QUOTA_PILOT_STATE:?Set CAUSURE_QUOTA_PILOT_STATE to the protected absolute state directory}/config/openai-quota-host.json
+  worker_caddyfile:
+    file: ./Caddyfile.worker
+  admin_caddyfile:
+    file: ./Caddyfile.admin
+
+secrets:
+  openai_provider_api_key:
+    file: ${CAUSURE_QUOTA_PILOT_STATE:?Set CAUSURE_QUOTA_PILOT_STATE to the protected absolute state directory}/secrets/openai-provider-api-key
+  openai_quota_admin_token:
+    file: ${CAUSURE_QUOTA_PILOT_STATE:?Set CAUSURE_QUOTA_PILOT_STATE to the protected absolute state directory}/secrets/openai-quota-admin-token
+  quota_server_certificate:
+    file: ${CAUSURE_QUOTA_PILOT_STATE:?Set CAUSURE_QUOTA_PILOT_STATE to the protected absolute state directory}/tls/quota-server.crt
+  quota_server_private_key:
+    file: ${CAUSURE_QUOTA_PILOT_STATE:?Set CAUSURE_QUOTA_PILOT_STATE to the protected absolute state directory}/tls/quota-server.key
+
+volumes:
+  quota-data:
+    name: causure-openai-quota-data
+
+networks:
+  quota-worker:
+    name: causure-quota
+    driver: bridge
+    internal: true
+    attachable: true
+  quota-backend:
+    name: causure-quota-backend
+    driver: bridge
+    internal: true
+  provider-egress:
+    name: causure-quota-egress
+    driver: bridge
+    internal: false
+  quota-admin-control:
+    name: causure-quota-admin-control
+    driver: bridge
+    internal: false

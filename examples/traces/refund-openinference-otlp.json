@@ -1,0 +1,173 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "refund-agent-production"
+            }
+          },
+          {
+            "key": "customer.email",
+            "value": {
+              "stringValue": "alice@example.com"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {
+            "name": "openinference-instrumentation",
+            "attributes": [
+              {
+                "key": "deployment.secret",
+                "value": {
+                  "stringValue": "scope-secret-not-real"
+                }
+              }
+            ]
+          },
+          "spans": [
+            {
+              "traceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+              "spanId": "00f067aa0ba902b7",
+              "name": "refund-agent run for alice@example.com",
+              "kind": 2,
+              "startTimeUnixNano": "1722182400000000000",
+              "endTimeUnixNano": "1722182400123000000",
+              "attributes": [
+                {
+                  "key": "openinference.span.kind",
+                  "value": {
+                    "stringValue": "AGENT"
+                  }
+                },
+                {
+                  "key": "llm.provider",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "input.value",
+                  "value": {
+                    "stringValue": "alice@example.com requests a refund"
+                  }
+                },
+                {
+                  "key": "session.id",
+                  "value": {
+                    "stringValue": "customer-session-123"
+                  }
+                },
+                {
+                  "key": "custom.metric",
+                  "value": {
+                    "intValue": "7"
+                  }
+                }
+              ],
+              "events": [
+                {
+                  "name": "customer-message",
+                  "timeUnixNano": "1722182400001000000",
+                  "attributes": [
+                    {
+                      "key": "message.content",
+                      "value": {
+                        "stringValue": "My card number is 4111111111111111"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "status": {
+                "code": 1,
+                "message": "Bearer sk-test-not-a-real-secret"
+              }
+            },
+            {
+              "traceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+              "spanId": "b7ad6b7169203331",
+              "parentSpanId": "00f067aa0ba902b7",
+              "name": "generate refund answer with private account context",
+              "kind": 3,
+              "startTimeUnixNano": "1722182400020000000",
+              "endTimeUnixNano": "1722182400095000000",
+              "attributes": [
+                {
+                  "key": "openinference.span.kind",
+                  "value": {
+                    "stringValue": "LLM"
+                  }
+                },
+                {
+                  "key": "llm.model_name",
+                  "value": {
+                    "stringValue": "gpt-4.1-mini"
+                  }
+                },
+                {
+                  "key": "llm.token_count.total",
+                  "value": {
+                    "intValue": "214"
+                  }
+                },
+                {
+                  "key": "gen_ai.usage.input_tokens",
+                  "value": {
+                    "intValue": "180"
+                  }
+                },
+                {
+                  "key": "llm.cost.total",
+                  "value": {
+                    "doubleValue": 0.0017
+                  }
+                },
+                {
+                  "key": "output.value",
+                  "value": {
+                    "stringValue": "Refund approved for account 8675309"
+                  }
+                },
+                {
+                  "key": "llm.input_messages.0.message.content",
+                  "value": {
+                    "stringValue": "Customer alice@example.com says their package never arrived"
+                  }
+                },
+                {
+                  "key": "api_key",
+                  "value": {
+                    "stringValue": "sk-test-not-a-real-secret"
+                  }
+                }
+              ],
+              "links": [
+                {
+                  "traceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "spanId": "bbbbbbbbbbbbbbbb",
+                  "attributes": [
+                    {
+                      "key": "authorization",
+                      "value": {
+                        "stringValue": "private-link-token"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "status": {
+                "code": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

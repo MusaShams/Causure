@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "qualification": "github-native-public-dependency-remediation",
+  "performed_at": "2026-08-11T19:59:42Z",
+  "result": "passed",
+  "scope": "public-pr-dependency-review-ruleset-and-advisory-closure",
+  "source": {
+    "authoritative_system": "TFVC",
+    "tfvc_server_path": "$/ProofBeforePatch",
+    "qualified_source_changesets": [
+      171,
+      172
+    ],
+    "repository": "MusaShams/Causure",
+    "repository_visibility": "public",
+    "pull_request": "https://github.com/MusaShams/Causure/pull/9",
+    "pull_request_number": 9,
+    "base_sha": "ca444e7c31a1ff0c89a255ef0962f3ed7b9f85d5",
+    "head_sha": "d5bbefe9582ecea891b6d02f2705f94cfa56e7d8",
+    "merge_sha": "c6500c0d6f3e59863d504e282cc81ae37823a1db",
+    "merged_at": "2026-08-11T19:48:55Z",
+    "mirrored_commits": [
+      {
+        "tfvc_changeset": 171,
+        "git_sha": "e82aae2fd3a25bbd401955a699a710d4c90c8873"
+      },
+      {
+        "tfvc_changeset": 172,
+        "git_sha": "d5bbefe9582ecea891b6d02f2705f94cfa56e7d8"
+      }
+    ]
+  },
+  "pull_request_qualification": {
+    "state": "merged",
+    "ready_pull_request": true,
+    "mergeable_before_merge": true,
+    "unresolved_review_thread_count": 0,
+    "ci": {
+      "run_id": 31529530330,
+      "run_url": "https://github.com/MusaShams/Causure/actions/runs/31529530330",
+      "head_sha": "d5bbefe9582ecea891b6d02f2705f94cfa56e7d8",
+      "conclusion": "success",
+      "successful_jobs": [
+        "package",
+        "test (ubuntu-latest, Python 3.11)",
+        "test (ubuntu-latest, Python 3.12)",
+        "test (ubuntu-latest, Python 3.13)",
+        "test (windows-latest, Python 3.11)",
+        "test (windows-latest, Python 3.12)",
+        "test (windows-latest, Python 3.13)"
+      ]
+    },
+    "codeql": {
+      "run_id": 31529530351,
+      "run_url": "https://github.com/MusaShams/Causure/actions/runs/31529530351",
+      "job_id": 93905929670,
+      "job_name": "analyze (Python)",
+      "head_sha": "d5bbefe9582ecea891b6d02f2705f94cfa56e7d8",
+      "conclusion": "success"
+    },
+    "dependency_review": {
+      "run_id": 31529530292,
+      "run_url": "https://github.com/MusaShams/Causure/actions/runs/31529530292",
+      "job_id": 93905933938,
+      "job_name": "dependency-review",
+      "head_sha": "d5bbefe9582ecea891b6d02f2705f94cfa56e7d8",
+      "conclusion": "success",
+      "completed_at": "2026-08-11T19:46:30Z"
+    }
+  },
+  "protected_main": {
+    "ruleset_id": 20713003,
+    "ruleset_name": "Protect main",
+    "enforcement": "active",
+    "updated_at": "2026-08-11T15:48:17.563-04:00",
+    "bypass_actor_count": 0,
+    "deletion_blocked": true,
+    "force_push_blocked": true,
+    "pull_request_required": true,
+    "review_thread_resolution_required": true,
+    "strict_status_checks": true,
+    "required_status_checks": [
+      "package",
+      "test (ubuntu-latest, Python 3.11)",
+      "test (ubuntu-latest, Python 3.12)",
+      "test (ubuntu-latest, Python 3.13)",
+      "test (windows-latest, Python 3.11)",
+      "test (windows-latest, Python 3.12)",
+      "test (windows-latest, Python 3.13)",
+      "analyze (Python)",
+      "dependency-review"
+    ],
+    "dependency_review_required": true
+  },
+  "post_merge": {
+    "main_sha": "c6500c0d6f3e59863d504e282cc81ae37823a1db",
+    "ci": {
+      "run_id": 31529748163,
+      "run_url": "https://github.com/MusaShams/Causure/actions/runs/31529748163",
+      "conclusion": "success"
+    },
+    "codeql": {
+      "run_id": 31529748144,
+      "run_url": "https://github.com/MusaShams/Causure/actions/runs/31529748144",
+      "job_id": 93906664204,
+      "conclusion": "success"
+    },
+    "dependency_graph": {
+      "run_id": 31529752172,
+      "run_url": "https://github.com/MusaShams/Causure/actions/runs/31529752172",
+      "conclusion": "success"
+    }
+  },
+  "remediation": {
+    "package": "cryptography",
+    "previous_version": "49.0.0",
+    "patched_version": "50.0.0",
+    "ghsa_id": "GHSA-g6cj-pr64-35w5",
+    "cve_id": "CVE-2026-69247",
+    "severity": "high",
+    "dependabot_alert": {
+      "number": 1,
+      "state": "fixed",
+      "fixed_at": "2026-08-11T19:50:03Z"
+    },
+    "superseded_dependabot_pull_request": {
+      "number": 2,
+      "url": "https://github.com/MusaShams/Causure/pull/2",
+      "state": "closed",
+      "merged": false,
+      "closed_at": "2026-08-11T19:51:03Z"
+    }
+  },
+  "alert_review": {
+    "open_code_scanning_alerts": 0,
+    "open_secret_scanning_alerts": 0,
+    "open_dependabot_alerts": 0
+  },
+  "remaining_required_scenarios": [
+    "fresh public same-repository approve, abstain, and needs-evidence example runs"
+  ],
+  "limitations": [
+    "This receipt preserves the follow-up state and does not mutate or broaden the earlier public fork qualification receipt.",
+    "The passing dependency review qualifies its public GitHub workflow and current dependency delta, not every future dependency change.",
+    "Repository rules and alert counts are mutable hosted state and must be rechecked for later releases.",
+    "Synthetic GitHub qualification does not qualify a company's replay code, evaluation code, secrets, network policy, or deployment environment."
+  ],
+  "failure": null
+}

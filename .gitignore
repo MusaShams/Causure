@@ -1,0 +1,36 @@
+# Local source-control metadata
+$tf/
+
+# Python caches and environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# Local secrets and signing material
+.env
+.env.*
+*.clixml
+*.key
+*.p12
+*.pem
+*.pfx
+
+# Generated artifacts and local state
+.coverage
+coverage.xml
+build/
+dist/
+htmlcov/
+pilot-state/
+deploy/openai-quota-pilot/state/
+*.db
+*.sqlite
+*.sqlite3
+*-shm
+*-wal
+causure-report.md
+causure-result.json

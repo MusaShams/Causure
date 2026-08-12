@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://causure.dev/schemas/windows-service-bundle-manifest.schema.json",
+  "title": "Causure Windows service bundle manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "product",
+    "package_version",
+    "service_name",
+    "build",
+    "runtime",
+    "install",
+    "files"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "product": {
+      "const": "Causure Windows Team Service Bundle"
+    },
+    "package_version": {
+      "const": "0.4.0a15"
+    },
+    "service_name": {
+      "const": "CausureTeam"
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pip_version",
+        "pip_wheel_sha256",
+        "causure_wheel_sha256"
+      ],
+      "properties": {
+        "pip_version": {
+          "const": "26.1.2"
+        },
+        "pip_wheel_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "causure_wheel_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "python_version",
+        "architecture",
+        "dependencies"
+      ],
+      "properties": {
+        "python_version": {
+          "type": "string",
+          "pattern": "^3\\.(1[1-9]|[2-9][0-9])\\.[0-9]+$"
+        },
+        "architecture": {
+          "const": "64bit"
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cffi",
+            "cryptography",
+            "pycparser",
+            "pyjwt",
+            "pywin32",
+            "waitress"
+          ],
+          "properties": {
+            "cffi": {
+              "const": "2.1.0"
+            },
+            "cryptography": {
+              "const": "50.0.0"
+            },
+            "pycparser": {
+              "const": "3.0"
+            },
+            "pyjwt": {
+              "const": "2.13.0"
+            },
+            "pywin32": {
+              "const": "312"
+            },
+            "waitress": {
+              "const": "3.0.2"
+            }
+          }
+        }
+      }
+    },
+    "install": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base_path",
+        "receipt_path",
+        "runtime_relative_path"
+      ],
+      "properties": {
+        "base_path": {
+          "const": "C:\\Program Files\\Causure\\Team"
+        },
+        "receipt_path": {
+          "const": "C:\\ProgramData\\Causure\\windows-service-installation.json"
+        },
+        "runtime_relative_path": {
+          "const": "runtime"
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 20000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "byte_count",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512,
+            "pattern": "^(install\\.ps1|runtime/[^\\\\:]+)$"
+          },
+          "byte_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "$ref": "#/$defs/sha256"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

@@ -1,0 +1,465 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team investigation record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "tenant_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    },
+    "investigation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "investigating",
+        "blocked",
+        "closed"
+      ]
+    },
+    "priority": {
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "critical"
+      ]
+    },
+    "opened_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "identity_provider": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "subject_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        }
+      },
+      "required": [
+        "identity_provider",
+        "subject_id"
+      ]
+    },
+    "candidate_only": {
+      "const": true
+    },
+    "gate_eligible": {
+      "const": false
+    },
+    "causal_claims_inferred": {
+      "const": false
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/observation"
+      },
+      "minItems": 1,
+      "maxItems": 128
+    },
+    "assigned_to": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "identity_provider": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "subject_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        }
+      },
+      "required": [
+        "identity_provider",
+        "subject_id"
+      ]
+    },
+    "resolution": {
+      "enum": [
+        "change_case_opened",
+        "duplicate",
+        "not_a_failure",
+        "no_change_required",
+        "insufficient_evidence"
+      ]
+    },
+    "linked_case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "duplicate_of": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "tenant_id",
+    "investigation_id",
+    "revision",
+    "created_at",
+    "updated_at",
+    "title",
+    "status",
+    "priority",
+    "opened_by",
+    "candidate_only",
+    "gate_eligible",
+    "causal_claims_inferred",
+    "observations"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "closed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "resolution"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "resolution"
+              ]
+            },
+            {
+              "required": [
+                "linked_case_id"
+              ]
+            },
+            {
+              "required": [
+                "duplicate_of"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "resolution": {
+            "const": "change_case_opened"
+          }
+        },
+        "required": [
+          "resolution"
+        ]
+      },
+      "then": {
+        "required": [
+          "linked_case_id"
+        ],
+        "not": {
+          "required": [
+            "duplicate_of"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "resolution": {
+            "const": "duplicate"
+          }
+        },
+        "required": [
+          "resolution"
+        ]
+      },
+      "then": {
+        "required": [
+          "duplicate_of"
+        ],
+        "not": {
+          "required": [
+            "linked_case_id"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "resolution": {
+            "enum": [
+              "not_a_failure",
+              "no_change_required",
+              "insufficient_evidence"
+            ]
+          }
+        },
+        "required": [
+          "resolution"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "linked_case_id"
+              ]
+            },
+            {
+              "required": [
+                "duplicate_of"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "fixture_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.investigation-fixture+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "named_count": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "enum": [
+            "AGENT",
+            "CHAIN",
+            "EMBEDDING",
+            "EVALUATOR",
+            "GUARDRAIL",
+            "LLM",
+            "PROMPT",
+            "RERANKER",
+            "RETRIEVER",
+            "TOOL"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "name",
+        "count"
+      ]
+    },
+    "status_count": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "code",
+        "count"
+      ]
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "observation_id": {
+          "type": "string",
+          "pattern": "^observation-[a-f0-9]{64}$"
+        },
+        "attached_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "attached_by": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "identity_provider": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+            },
+            "subject_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+            }
+          },
+          "required": [
+            "identity_provider",
+            "subject_id"
+          ]
+        },
+        "fixture": {
+          "$ref": "#/$defs/fixture_subject"
+        },
+        "fixture_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "trace_source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "cluster_id": {
+          "type": "string",
+          "pattern": "^trace-[a-f0-9]{64}$"
+        },
+        "trace_id_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "span_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "root_span_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "error_span_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "span_kind_counts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/named_count"
+          },
+          "maxItems": 10
+        },
+        "status_code_counts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/status_count"
+          },
+          "maxItems": 3
+        },
+        "model_identifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+          },
+          "maxItems": 10000,
+          "uniqueItems": true
+        },
+        "provider_identifiers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+          },
+          "maxItems": 10000,
+          "uniqueItems": true
+        },
+        "earliest_start_time_unix_nano": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        },
+        "latest_end_time_unix_nano": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        },
+        "observed_duration_nano": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$"
+        }
+      },
+      "required": [
+        "observation_id",
+        "attached_at",
+        "attached_by",
+        "fixture",
+        "fixture_id",
+        "manifest_sha256",
+        "trace_source_sha256",
+        "cluster_id",
+        "trace_id_sha256",
+        "span_count",
+        "root_span_count",
+        "error_span_count",
+        "span_kind_counts",
+        "status_code_counts",
+        "model_identifiers",
+        "provider_identifiers"
+      ]
+    }
+  }
+}

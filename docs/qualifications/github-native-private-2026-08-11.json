@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0",
+  "qualification": "github-native-private-full-sha",
+  "performed_at": "2026-08-11T17:54:49Z",
+  "result": "passed",
+  "scope": "private-same-repository-and-dependabot",
+  "source": {
+    "authoritative_system": "TFVC",
+    "tfvc_server_path": "$/ProofBeforePatch",
+    "tfvc_changesets": [
+      167,
+      168,
+      169
+    ],
+    "action_repository": "MusaShams/Causure",
+    "action_repository_visibility": "private",
+    "action_commit_sha": "9a57443e98b6c031bbadc48f863cdb25c92dc63e",
+    "action_pull_request": "https://github.com/MusaShams/Causure/pull/8",
+    "action_pull_request_state": "open_draft",
+    "action_references": [
+      "MusaShams/Causure/trusted-case-generator@9a57443e98b6c031bbadc48f863cdb25c92dc63e",
+      "MusaShams/Causure@9a57443e98b6c031bbadc48f863cdb25c92dc63e"
+    ],
+    "action_ci": {
+      "run_id": 31519620304,
+      "head_sha": "9a57443e98b6c031bbadc48f863cdb25c92dc63e",
+      "passed_jobs": [
+        "package",
+        "test (ubuntu-latest, Python 3.11)",
+        "test (ubuntu-latest, Python 3.12)",
+        "test (ubuntu-latest, Python 3.13)",
+        "test (windows-latest, Python 3.11)",
+        "test (windows-latest, Python 3.12)",
+        "test (windows-latest, Python 3.13)"
+      ],
+      "capability_guarded_skips": [
+        {
+          "workflow": "CodeQL",
+          "run_id": 31519620236
+        },
+        {
+          "workflow": "Dependency review",
+          "run_id": 31519620344
+        }
+      ]
+    }
+  },
+  "examples": {
+    "repository": "MusaShams/causure-examples",
+    "repository_id": 1331178261,
+    "owner_id": 125925318,
+    "repository_visibility": "private",
+    "base_branch": "main",
+    "base_sha": "c5edacd084ab2f91359ff4b84a7338e3314c39a9",
+    "private_action_sharing": "user",
+    "workflow_run_attempt": 1,
+    "artifact_retention_days": 14
+  },
+  "scenarios": [
+    {
+      "name": "approve",
+      "pull_request": "https://github.com/MusaShams/causure-examples/pull/2",
+      "pull_request_state": "open_draft",
+      "head_sha": "3103159e037f52d9e47a4d19e88c05d13461600e",
+      "workflow_run_id": 31519804173,
+      "stable_job": {
+        "job_id": 93873776006,
+        "conclusion": "success"
+      },
+      "review": {
+        "case_id": "synthetic-approve-3103159e037f",
+        "decision": "approve",
+        "recommended_action": "patch",
+        "custom_check_conclusion": "success",
+        "check_run_id": 93873922703,
+        "annotation_count": 0,
+        "verification_status": "verified",
+        "publication_status": "published"
+      },
+      "artifact": {
+        "id": 9112564054,
+        "name": "causure-31519804173-1",
+        "size_in_bytes": 13069,
+        "digest": "sha256:67067ff0717f6facc08d31520b05f34c2766842b78b1e5c1e83735d2d371266c",
+        "created_at": "2026-08-11T17:53:02Z",
+        "expires_at": "2026-08-25T17:53:01Z",
+        "generation_chain_present": true,
+        "review_chain_present": true
+      }
+    },
+    {
+      "name": "abstain",
+      "pull_request": "https://github.com/MusaShams/causure-examples/pull/3",
+      "pull_request_state": "open_draft",
+      "head_sha": "a950f283ffbfa219a732d6d4c11da41494ff7389",
+      "workflow_run_id": 31519836258,
+      "stable_job": {
+        "job_id": 93873884362,
+        "conclusion": "failure"
+      },
+      "review": {
+        "case_id": "synthetic-abstain-a950f283ffbf",
+        "decision": "reject",
+        "recommended_action": "do_not_patch",
+        "custom_check_conclusion": "failure",
+        "check_run_id": 93873990378,
+        "annotation_count": 5,
+        "verification_status": "verified",
+        "publication_status": "published"
+      },
+      "artifact": {
+        "id": 9112571822,
+        "name": "causure-31519836258-1",
+        "size_in_bytes": 14099,
+        "digest": "sha256:46c3d13ec38c2106acf0acc2906f8f1d107ae1cf096672c7bcfa698ffea2dcba",
+        "created_at": "2026-08-11T17:53:17Z",
+        "expires_at": "2026-08-25T17:53:16Z",
+        "generation_chain_present": true,
+        "review_chain_present": true
+      }
+    },
+    {
+      "name": "needs-evidence",
+      "pull_request": "https://github.com/MusaShams/causure-examples/pull/4",
+      "pull_request_state": "open_draft",
+      "head_sha": "23f11672b375a9d133a9f10bce491cdd046530c2",
+      "workflow_run_id": 31519872316,
+      "stable_job": {
+        "job_id": 93873997992,
+        "conclusion": "failure"
+      },
+      "review": {
+        "case_id": "synthetic-needs_evidence-23f11672b375",
+        "decision": "needs_evidence",
+        "recommended_action": "collect_evidence",
+        "custom_check_conclusion": "action_required",
+        "check_run_id": 93874088084,
+        "annotation_count": 7,
+        "verification_status": "verified",
+        "publication_status": "published"
+      },
+      "artifact": {
+        "id": 9112583165,
+        "name": "causure-31519872316-1",
+        "size_in_bytes": 12855,
+        "digest": "sha256:3ef652be4589dc1324f89c827f9002be9d9364b7977978a3672eaa2eabdd7ca9",
+        "created_at": "2026-08-11T17:53:37Z",
+        "expires_at": "2026-08-25T17:53:37Z",
+        "generation_chain_present": true,
+        "review_chain_present": true
+      }
+    },
+    {
+      "name": "dependabot-no-match",
+      "pull_request": "https://github.com/MusaShams/causure-examples/pull/1",
+      "pull_request_state": "open",
+      "head_sha": "06e85abb3dd3e38f8c1168ee0ec7ca2bbe30fffd",
+      "workflow_run_id": 31519968905,
+      "stable_job": {
+        "job_id": 93874317517,
+        "conclusion": "success"
+      },
+      "selection_status": "no_match",
+      "custom_check_present": false,
+      "artifact_present": false,
+      "fixed_action_sha_observed_in_head_workflow": true
+    }
+  ],
+  "artifact_inspection": {
+    "downloaded_from_github": true,
+    "approve_abstain_and_needs_evidence_each_contained_generation_chain": true,
+    "approve_abstain_and_needs_evidence_each_contained_review_publication_verification_request_and_receipt": true,
+    "downloaded_copies_committed": false
+  },
+  "remaining_required_scenarios": [
+    "generator-backed fork pull request fails before protected adapter execution"
+  ],
+  "limitations": [
+    "This receipt qualifies private same-repository approve, reject, and needs-evidence behavior plus the Dependabot no-match path at one exact Causure commit; it does not qualify the generator-backed fork boundary.",
+    "The Causure and synthetic scenario pull requests remained open drafts during qualification, and both repositories remained private.",
+    "The retained GitHub artifacts expire after 14 days; this receipt records their GitHub IDs, metadata, and archive digests but does not embed their bytes.",
+    "CodeQL and dependency review were capability-guarded skips on the private Causure pull request and are not claimed as successful security qualifications.",
+    "Synthetic adapter behavior does not qualify a company's replay or evaluation code, production secrets, network policy, or deployment environment."
+  ],
+  "failure": null
+}

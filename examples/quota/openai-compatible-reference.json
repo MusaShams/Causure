@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "service_id": "openai-compatible-reference-v1",
+  "upstream_responses_url": "https://api.openai.invalid/v1/responses",
+  "worker_proxy_url": "https://openai-quota:8443/v1",
+  "proxy_container_name": "openai-quota",
+  "network_name": "causure-quota",
+  "lease_cleanup_seconds": 30,
+  "upstream_timeout_seconds": 30.0,
+  "max_request_bytes": 65536,
+  "max_response_bytes": 1048576,
+  "models": [
+    {
+      "model": "replace-with-an-exact-model-revision",
+      "input_usd_per_million_tokens": "100000.000000",
+      "cached_input_usd_per_million_tokens": "100000.000000",
+      "output_usd_per_million_tokens": "100000.000000",
+      "max_input_tokens": 128000,
+      "max_output_tokens": 4096
+    }
+  ]
+}

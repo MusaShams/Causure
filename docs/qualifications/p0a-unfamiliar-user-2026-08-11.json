@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "qualification": "p0a-unfamiliar-user",
+  "performed_at": "2026-08-11T21:28:46Z",
+  "result": "passed",
+  "evidence_basis": "facilitator observation plus local artifact verification",
+  "participant": {
+    "anonymous_profile": "terminal-capable participant unfamiliar with Causure schemas, source, and demo reports",
+    "prior_product_exposure": false
+  },
+  "environment": {
+    "operating_system": "Microsoft Windows 11 Pro 10.0.26200 build 26200",
+    "python_version": "3.13.5",
+    "installation_source": "local candidate wheel",
+    "fresh_virtual_environment": true,
+    "network_required": false,
+    "cloud_credentials_required": false,
+    "docker_required": false,
+    "service_deployment_required": false
+  },
+  "distribution": {
+    "filename": "causure-0.4.0a18-py3-none-any.whl",
+    "byte_count": 372413,
+    "sha256": "ab6f1bd2a06eaa7574d42ea8be854fe1e71ed5f2424370fa01e1357cc8959d29"
+  },
+  "observations": {
+    "elapsed_seconds_after_install_upper_bound": 300,
+    "elapsed_report": "under five minutes",
+    "assistance_count": 0,
+    "outcomes": [
+      {
+        "decision": "approve",
+        "recommended_action": "patch",
+        "case_id": "refund-tool-description-001"
+      },
+      {
+        "decision": "reject",
+        "recommended_action": "do_not_patch",
+        "case_id": "refund-global-guardrail-001"
+      }
+    ],
+    "opened_report": true,
+    "comprehension": {
+      "narrow_change": "The participant explained that the narrow change was causally supported and passed the configured controls.",
+      "broad_change": "The participant explained that the broad change targeted the wrong component, changed excessive surface, and failed a negative control.",
+      "criteria_met": [
+        "causal_support",
+        "passing_controls",
+        "wrong_component",
+        "excessive_surface",
+        "failed_negative_control"
+      ]
+    },
+    "friction": []
+  },
+  "artifact_verification": {
+    "demo_index": {
+      "filename": "demo-result.json",
+      "schema_version": "1.0",
+      "engine_version": "0.4.0a18",
+      "synthetic": true,
+      "story_count": 2
+    },
+    "reports": [
+      {
+        "filename": "01-justified-minimal-patch.md",
+        "byte_count": 2901,
+        "sha256": "6ebe8841d7c2338ae56ee32dab5b009d21f18f209712eebf165c4302a4419379"
+      },
+      {
+        "filename": "02-overbroad-change-rejected.md",
+        "byte_count": 3353,
+        "sha256": "1f4a464bcca73c03043587df18e2f9515b3be0e8d0144d06c49c5b23a2c2f973"
+      }
+    ]
+  },
+  "limitations": [
+    "The exact elapsed second count and exact opened report filename were not retained; the facilitator reported completion in under five minutes and confirmed that at least one generated Markdown report was opened.",
+    "This qualification covers one unfamiliar participant, one Windows environment, the bound synthetic demo, and no real company trace or adapter integration."
+  ]
+}

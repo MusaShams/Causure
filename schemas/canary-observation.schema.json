@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure canary observation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "comparison_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "look_number": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "change_ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+        },
+        "change_case_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "review_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "case_id",
+        "change_ref",
+        "change_case_sha256",
+        "review_result_sha256"
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policy_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "policy_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "policy_id",
+        "policy_sha256"
+      ]
+    },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "started_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        },
+        "ended_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        }
+      },
+      "required": [
+        "started_at",
+        "ended_at"
+      ]
+    },
+    "evaluator_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+    },
+    "assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "enum": [
+            "randomized",
+            "deterministic_hash"
+          ]
+        },
+        "unit": {
+          "enum": [
+            "request",
+            "session",
+            "principal",
+            "tenant"
+          ]
+        },
+        "sticky": {
+          "type": "boolean"
+        },
+        "cross_cohort_contamination_detected": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "method",
+        "unit",
+        "sticky",
+        "cross_cohort_contamination_detected"
+      ]
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "deployment_ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+        },
+        "sample_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000000
+        },
+        "evidence_ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "metric_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+              },
+              "event_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000000
+              }
+            },
+            "required": [
+              "metric_id",
+              "event_count"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "required": [
+        "deployment_ref",
+        "sample_count",
+        "evidence_ref",
+        "metrics"
+      ]
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "deployment_ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+        },
+        "sample_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000000
+        },
+        "evidence_ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "metric_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+              },
+              "event_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000000
+              }
+            },
+            "required": [
+              "metric_id",
+              "event_count"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "required": [
+        "deployment_ref",
+        "sample_count",
+        "evidence_ref",
+        "metrics"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "comparison_id",
+    "look_number",
+    "observed_at",
+    "change",
+    "policy",
+    "window",
+    "evaluator_ref",
+    "assignment",
+    "baseline",
+    "candidate"
+  ]
+}

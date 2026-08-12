@@ -1,0 +1,23 @@
+{
+  "name": "strict-production-v1",
+  "min_reproduction_trials": 5,
+  "min_reproduction_rate": 0.8,
+  "require_independent_oracle": true,
+  "min_attribution_confidence": 0.8,
+  "min_attribution_margin": 0.2,
+  "min_intervention_trials": 5,
+  "min_intervention_success_rate": 0.8,
+  "require_isolated_intervention": true,
+  "max_changed_surfaces": 1,
+  "min_positive_controls": 3,
+  "min_positive_pass_rate": 1.0,
+  "min_negative_controls": 3,
+  "min_negative_pass_rate": 1.0,
+  "min_regression_controls": 20,
+  "min_regression_pass_rate": 1.0,
+  "allow_critical_regressions": false,
+  "require_metrics_for_approval": true,
+  "max_cost_increase_ratio": 0.05,
+  "max_latency_increase_ratio": 0.1,
+  "block_on_metric_regression": true
+}

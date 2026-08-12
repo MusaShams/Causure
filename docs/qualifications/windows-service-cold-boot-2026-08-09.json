@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "result": "passed",
+  "qualification_id": "35e89e6f00d24ec18f6773ba1f21bd17",
+  "os": {
+    "caption": "Microsoft Windows 11 Pro",
+    "version": "10.0.26200.0",
+    "build": 26200,
+    "prepared_boot_time_utc": "2026-08-09T21:46:53.0000000+00:00",
+    "qualified_boot_time_utc": "2026-08-09T22:08:47.5000000+00:00",
+    "reboot_observed": true
+  },
+  "bundle": {
+    "package_version": "0.4.0a15",
+    "bundle_sha256": "16ee1b521d70fa0670e1c2099843bc8a2ae22dd9520772748d6345ec1b6daf04",
+    "manifest_sha256": "2a625fb8af7e7b0ef1bed119fab055772c5870660c40234c29fe342747b41eab",
+    "manifest_file_count": 3318
+  },
+  "startup_task": {
+    "one_shot": true,
+    "principal": "NT AUTHORITY\\SYSTEM",
+    "powershell_path": "C:\\Program Files\\WindowsApps\\Microsoft.PowerShell_7.6.4.0_x64__8wekyb3d8bbwe\\pwsh.exe",
+    "completion_script_sha256": "24cff45a67a4ed7b865e1266baebe2e2c448790c412cb76dc67f98bf7959b440",
+    "state_sha256": "827cd762788daf33dbc8c334d45e2af9a8a01aac99bd73353989a58d9761ea37",
+    "startup_delay_seconds": 30
+  },
+  "installation": {
+    "automatic_start_receipt": true,
+    "start_type": "automatic",
+    "delayed_automatic": true,
+    "service_account": "NT SERVICE\\ProofBeforePatchTeam",
+    "unrestricted_service_sid": true,
+    "exact_image_path": "C:\\Program Files\\ProofBeforePatch\\Team\\0.4.0a15\\pythonservice.exe",
+    "exact_recovery_policy": true,
+    "post_boot_non_crash_failure_flag": true
+  },
+  "cold_boot": {
+    "performed": true,
+    "automatic_process_id": 5620,
+    "automatic_process_started_at_utc": "2026-08-09T22:11:22.1895121+00:00",
+    "scm_running_at_utc": "2026-08-09T22:11:26.5741278+00:00",
+    "ready_at_utc": "2026-08-09T22:11:28.4327367+00:00",
+    "scm_running_to_ready_seconds": 1.859,
+    "health_status": 200,
+    "readiness_status": 200,
+    "readiness_gated_separately_from_scm": true
+  },
+  "network_unavailable": {
+    "method": "outbound block scoped to exact service executable with local trust withheld",
+    "start_request_method": "non_waiting_scm",
+    "recovery_observation_method": "structured_scm_failure_events",
+    "workstation_adapter_changed": false,
+    "global_firewall_policy_changed": false,
+    "first_process_id": 11184,
+    "first_start_at_utc": "2026-08-09T22:11:34.2637698+00:00",
+    "first_stopped_observed_at_utc": "2026-08-09T22:11:35.4881515+00:00",
+    "first_failure_event_id": 7031,
+    "first_failure_event_record_id": 127644,
+    "first_failure_event_at_utc": "2026-08-09T22:11:35.3851788+00:00",
+    "first_failure_restart_delay_milliseconds": 120000,
+    "first_failure_action_code": 1,
+    "recovery_process_id": 13056,
+    "recovery_process_observed_at_utc": "2026-08-09T22:13:36.3896800+00:00",
+    "expected_recovery_at_utc": "2026-08-09T22:13:35.3851788+00:00",
+    "second_failure_event_id": 7034,
+    "second_failure_event_record_id": 127646,
+    "second_failure_event_at_utc": "2026-08-09T22:13:36.5819480+00:00",
+    "second_failure_count": 2,
+    "recovery_elapsed_seconds": 121.197,
+    "second_stopped_observed_at_utc": "2026-08-09T22:13:37.6219231+00:00",
+    "first_failure_restarted": true,
+    "second_failure_stopped_without_loop": true,
+    "first_failure_health_unavailable": true,
+    "first_failure_readiness_unavailable": true,
+    "second_failure_health_unavailable": true,
+    "second_failure_readiness_unavailable": true,
+    "non_crash_policy_effective_after_boot": true,
+    "exact_recovery_policy_remained": true,
+    "last_known_good_restored_exactly": true,
+    "firewall_rule_removed": true
+  },
+  "restoration": {
+    "recovery_policy_reapplied": true,
+    "health_status": 200,
+    "readiness_status": 200
+  },
+  "removal": {
+    "running_service_removed": true,
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "installed_manifest_absent": true,
+    "operator_paths_preserved": true,
+    "operator_acls_restored": true
+  },
+  "started_at_utc": "2026-08-09T22:09:46.5875622+00:00",
+  "finished_at_utc": "2026-08-09T22:14:43.7752537+00:00",
+  "cleanup": {
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "installed_manifest_absent": true,
+    "qualification_root_removed": true,
+    "startup_task_absent": true,
+    "firewall_rule_absent": true,
+    "errors": []
+  }
+}

@@ -1,0 +1,484 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure change case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "title",
+    "created_at",
+    "incident",
+    "verification",
+    "attribution",
+    "proposed_change",
+    "null_hypothesis",
+    "validation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "incident": {
+      "$ref": "#/$defs/incident"
+    },
+    "verification": {
+      "$ref": "#/$defs/verification"
+    },
+    "attribution": {
+      "$ref": "#/$defs/attribution"
+    },
+    "proposed_change": {
+      "$ref": "#/$defs/proposed_change"
+    },
+    "null_hypothesis": {
+      "$ref": "#/$defs/null_hypothesis"
+    },
+    "validation": {
+      "$ref": "#/$defs/validation"
+    }
+  },
+  "$defs": {
+    "incident": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "claimed_failure": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_behavior": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_behavior": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "requirement_status": {
+          "enum": [
+            "clear",
+            "ambiguous",
+            "conflicting",
+            "unknown"
+          ]
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "claimed_failure",
+        "expected_behavior",
+        "observed_behavior",
+        "severity",
+        "requirement_status",
+        "source_refs"
+      ]
+    },
+    "oracle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "exact_match",
+            "executable",
+            "policy",
+            "human_label",
+            "consensus",
+            "custom"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "independent": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "kind",
+        "description",
+        "independent",
+        "evidence_refs"
+      ]
+    },
+    "reproduction_trial": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reproduced": {
+          "type": "boolean"
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "reproduced",
+        "evidence_ref"
+      ]
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "oracle": {
+          "$ref": "#/$defs/oracle"
+        },
+        "reproduction_trials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reproduction_trial"
+          }
+        }
+      },
+      "required": [
+        "oracle",
+        "reproduction_trials"
+      ]
+    },
+    "intervention_trial": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "failure_resolved": {
+          "type": "boolean"
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "failure_resolved",
+        "evidence_ref"
+      ]
+    },
+    "intervention": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "isolated": {
+          "type": "boolean"
+        },
+        "held_constant": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "trials": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/intervention_trial"
+          }
+        }
+      },
+      "required": [
+        "description",
+        "isolated",
+        "held_constant",
+        "trials"
+      ]
+    },
+    "hypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "enum": [
+            "system_prompt",
+            "tool_description",
+            "tool_schema",
+            "model_routing",
+            "retrieval_configuration",
+            "reviewer",
+            "verification_step",
+            "retry_policy",
+            "stopping_policy",
+            "memory_policy",
+            "tool_implementation",
+            "evaluator",
+            "environment",
+            "model_reasoning",
+            "requirement",
+            "other"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "intervention": {
+          "$ref": "#/$defs/intervention"
+        }
+      },
+      "required": [
+        "component",
+        "confidence",
+        "evidence_refs"
+      ]
+    },
+    "attribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hypothesis"
+          }
+        }
+      },
+      "required": [
+        "hypotheses"
+      ]
+    },
+    "proposed_change": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "enum": [
+            "system_prompt",
+            "tool_description",
+            "tool_schema",
+            "model_routing",
+            "retrieval_configuration",
+            "reviewer",
+            "verification_step",
+            "retry_policy",
+            "stopping_policy",
+            "memory_policy",
+            "tool_implementation",
+            "evaluator",
+            "environment",
+            "model_reasoning",
+            "requirement",
+            "other"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prediction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_unaffected_behaviors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "known_risks": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "changed_surface_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "change_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "component",
+        "summary",
+        "prediction",
+        "expected_unaffected_behaviors",
+        "known_risks",
+        "changed_surface_count",
+        "change_ref"
+      ]
+    },
+    "null_hypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_against": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "statement",
+        "evidence_against"
+      ]
+    },
+    "validation_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "positive",
+            "negative",
+            "regression"
+          ]
+        },
+        "critical": {
+          "type": "boolean"
+        },
+        "baseline_passed": {
+          "type": "boolean"
+        },
+        "candidate_passed": {
+          "type": "boolean"
+        },
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "critical",
+        "baseline_passed",
+        "candidate_passed",
+        "evidence_ref"
+      ]
+    },
+    "metric_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "p95_latency_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mean_cost_usd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mean_tokens": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "metric_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "baseline": {
+          "$ref": "#/$defs/metric_snapshot"
+        },
+        "candidate": {
+          "$ref": "#/$defs/metric_snapshot"
+        }
+      },
+      "required": [
+        "baseline",
+        "candidate"
+      ]
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validation_case"
+          }
+        },
+        "metrics": {
+          "$ref": "#/$defs/metric_comparison"
+        }
+      },
+      "required": [
+        "cases"
+      ]
+    }
+  }
+}

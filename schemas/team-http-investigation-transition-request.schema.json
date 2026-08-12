@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team HTTP investigation-transition request",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "investigating",
+        "blocked",
+        "closed"
+      ]
+    },
+    "priority": {
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "critical"
+      ]
+    },
+    "assigned_to": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "identity_provider": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+            },
+            "subject_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+            }
+          },
+          "required": [
+            "identity_provider",
+            "subject_id"
+          ]
+        }
+      ]
+    },
+    "expected_revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9999
+    },
+    "expected_head_sha256": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      ]
+    },
+    "resolution": {
+      "enum": [
+        "change_case_opened",
+        "duplicate",
+        "not_a_failure",
+        "no_change_required",
+        "insufficient_evidence"
+      ]
+    },
+    "linked_case_id": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        }
+      ]
+    },
+    "duplicate_of": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        }
+      ]
+    },
+    "retention_class_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    }
+  },
+  "required": [
+    "title",
+    "status",
+    "priority",
+    "assigned_to",
+    "expected_revision",
+    "expected_head_sha256"
+  ]
+}

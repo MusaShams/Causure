@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure sandbox policy",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "policy_id": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/-]{2,127}$"
+    },
+    "worker_protocol": {
+      "const": "1.0"
+    },
+    "image": {
+      "type": "string",
+      "maxLength": 328,
+      "pattern": "^[a-z0-9][a-z0-9._:/-]{0,255}@sha256:[a-f0-9]{64}$"
+    },
+    "network_mode": {
+      "enum": [
+        "none",
+        "quota_proxy"
+      ]
+    },
+    "cpu_limit": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 64
+    },
+    "memory_mb": {
+      "type": "integer",
+      "minimum": 64,
+      "maximum": 65536
+    },
+    "pids_limit": {
+      "type": "integer",
+      "minimum": 8,
+      "maximum": 4096
+    },
+    "tmpfs_mb": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4096
+    },
+    "max_output_bytes": {
+      "type": "integer",
+      "minimum": 1024,
+      "maximum": 16777216
+    },
+    "user": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,9}:[1-9][0-9]{0,9}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy_id",
+    "worker_protocol",
+    "image",
+    "network_mode",
+    "cpu_limit",
+    "memory_mb",
+    "pids_limit",
+    "tmpfs_mb",
+    "max_output_bytes",
+    "user"
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "schema_version": "1.0",
+  "qualification": "github-native-public-security-and-fork",
+  "performed_at": "2026-08-11T19:16:26Z",
+  "result": "passed",
+  "scope": "public-controls-codeql-and-generator-backed-fork",
+  "source": {
+    "authoritative_system": "TFVC",
+    "tfvc_server_path": "$/ProofBeforePatch",
+    "qualified_source_changesets": [
+      167,
+      168,
+      169,
+      170
+    ],
+    "action_repository": "MusaShams/Causure",
+    "action_repository_visibility": "public",
+    "published_main_sha": "ca444e7c31a1ff0c89a255ef0962f3ed7b9f85d5",
+    "invoked_action_sha": "9a57443e98b6c031bbadc48f863cdb25c92dc63e",
+    "action_references": [
+      "MusaShams/Causure/trusted-case-generator@9a57443e98b6c031bbadc48f863cdb25c92dc63e",
+      "MusaShams/Causure@9a57443e98b6c031bbadc48f863cdb25c92dc63e"
+    ],
+    "published_main_ci": {
+      "run_id": 31524492509,
+      "head_sha": "ca444e7c31a1ff0c89a255ef0962f3ed7b9f85d5",
+      "conclusion": "success"
+    }
+  },
+  "public_security": {
+    "controls": {
+      "vulnerability_alerts": "enabled",
+      "dependabot_security_updates": "enabled",
+      "private_vulnerability_reporting": "enabled",
+      "secret_scanning": "enabled",
+      "secret_scanning_push_protection": "enabled",
+      "default_workflow_permissions": "read",
+      "workflow_pr_approval_permission": false,
+      "allowed_actions": "github_owned_only",
+      "full_action_sha_pins_required": true
+    },
+    "main_ruleset": {
+      "id": 20713003,
+      "name": "Protect main",
+      "enforcement": "active",
+      "bypass_actor_count": 0,
+      "deletion_blocked": true,
+      "force_push_blocked": true,
+      "pull_request_required": true,
+      "review_thread_resolution_required": true,
+      "strict_status_checks": true,
+      "required_status_checks": [
+        "package",
+        "test (ubuntu-latest, Python 3.11)",
+        "test (ubuntu-latest, Python 3.12)",
+        "test (ubuntu-latest, Python 3.13)",
+        "test (windows-latest, Python 3.11)",
+        "test (windows-latest, Python 3.12)",
+        "test (windows-latest, Python 3.13)",
+        "analyze (Python)"
+      ],
+      "dependency_review_required": false
+    },
+    "codeql": {
+      "workflow_run_id": 31526179601,
+      "workflow_run_url": "https://github.com/MusaShams/Causure/actions/runs/31526179601",
+      "event": "workflow_dispatch",
+      "head_sha": "ca444e7c31a1ff0c89a255ef0962f3ed7b9f85d5",
+      "job_id": 93894950441,
+      "job_name": "analyze (Python)",
+      "conclusion": "success",
+      "started_at": "2026-08-11T19:06:36Z",
+      "completed_at": "2026-08-11T19:08:00Z"
+    },
+    "alert_review": {
+      "open_code_scanning_alerts": 0,
+      "dismissed_as_false_positive": 3,
+      "dismissed_as_used_in_tests": 3,
+      "open_secret_scanning_alerts": 0,
+      "open_dependabot_alerts": 1
+    }
+  },
+  "fork_scenario": {
+    "name": "generator-backed-public-fork",
+    "pull_request": "https://github.com/MusaShams/causure-examples/pull/5",
+    "pull_request_state": "open_draft",
+    "base_repository": "MusaShams/causure-examples",
+    "base_branch": "main",
+    "base_sha": "c5edacd084ab2f91359ff4b84a7338e3314c39a9",
+    "head_repository": "causure-project/causure-examples",
+    "head_repository_id": 1331247229,
+    "head_repository_visibility": "public",
+    "head_branch": "codex/scenario-fork",
+    "head_sha": "75587a23602f1d8f70009ce1f602c41fa9a39892",
+    "changed_paths": [
+      "agent/tools/refund-policy.txt"
+    ],
+    "workflow_run_id": 31526793767,
+    "workflow_run_attempt": 1,
+    "workflow_run_url": "https://github.com/MusaShams/causure-examples/actions/runs/31526793767",
+    "stable_job": {
+      "job_id": 93896989278,
+      "name": "Causure gate",
+      "conclusion": "failure",
+      "failure_expected": true
+    },
+    "steps": {
+      "protected_base_checkout": "success",
+      "candidate_head_checkout": "success",
+      "trusted_generation": "failure",
+      "ordinary_review": "skipped",
+      "artifact_retention": "skipped"
+    },
+    "guard_message": "trusted case generation is unavailable for fork pull requests; the gate fails closed without executing the adapter",
+    "protected_adapter_executed": false,
+    "ordinary_review_executed": false,
+    "custom_check_present": false,
+    "artifact_present": false,
+    "github_token_masked_in_log": true,
+    "result": "passed"
+  },
+  "security_follow_up": {
+    "status": "open_pending_tfvc_upgrade",
+    "dependabot_alert_number": 1,
+    "package": "cryptography",
+    "current_pin": "49.0.0",
+    "first_patched_version": "50.0.0",
+    "severity": "high",
+    "ghsa_id": "GHSA-g6cj-pr64-35w5",
+    "dependabot_pull_request": "https://github.com/MusaShams/Causure/pull/2",
+    "note": "The alert remains open; this receipt does not claim dependency remediation or a successful public dependency-review run."
+  },
+  "remaining_required_scenarios": [
+    "public same-repository approve, abstain, and needs-evidence example runs",
+    "successful public dependency-review run before making that check required"
+  ],
+  "limitations": [
+    "The expected failed workflow conclusion is the passing outcome for this fail-closed fork-boundary qualification.",
+    "The generator guard ran before protected adapter execution, so no generated case, ordinary review, custom Check Run, or artifact should exist.",
+    "The same-repository decision scenarios were qualified while the examples repository was private and are not relabeled as public hosted runs by this receipt.",
+    "The open cryptography advisory requires a TFVC-first dependency update and is not dismissed or represented as resolved here.",
+    "Synthetic adapter behavior does not qualify a company's replay or evaluation code, production secrets, network policy, or deployment environment."
+  ],
+  "failure": null
+}

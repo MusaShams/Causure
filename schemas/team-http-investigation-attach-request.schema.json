@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team HTTP investigation-observation request",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 11184812,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "cluster_id": {
+      "type": "string",
+      "pattern": "^trace-[a-f0-9]{64}$"
+    },
+    "expected_revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9999
+    },
+    "expected_head_sha256": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      ]
+    },
+    "retention_class_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    }
+  },
+  "required": [
+    "fixture",
+    "cluster_id",
+    "expected_revision",
+    "expected_head_sha256"
+  ]
+}

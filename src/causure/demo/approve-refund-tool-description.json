@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.0",
+  "case_id": "refund-tool-description-001",
+  "title": "Clarify refund eligibility fields in the policy tool description",
+  "created_at": "2026-07-27T16:30:00-04:00",
+  "incident": {
+    "claimed_failure": "The support agent denied eligible refunds when the account age and purchase age differed.",
+    "expected_behavior": "The agent should use purchase_age_days when evaluating the 30-day refund window.",
+    "observed_behavior": "The agent used account_age_days and denied otherwise eligible requests.",
+    "severity": "high",
+    "requirement_status": "clear",
+    "source_refs": [
+      "otel://support-agent/traces/refund-cluster-2026-07-27"
+    ]
+  },
+  "verification": {
+    "oracle": {
+      "kind": "policy",
+      "description": "A versioned refund-policy evaluator labels eligibility from purchase age.",
+      "independent": true,
+      "evidence_refs": [
+        "artifact://refund-policy/v12/oracle-results.json"
+      ]
+    },
+    "reproduction_trials": [
+      {
+        "id": "repro-01",
+        "reproduced": true,
+        "evidence_ref": "trace://replay/refund-01"
+      },
+      {
+        "id": "repro-02",
+        "reproduced": true,
+        "evidence_ref": "trace://replay/refund-02"
+      },
+      {
+        "id": "repro-03",
+        "reproduced": true,
+        "evidence_ref": "trace://replay/refund-03"
+      }
+    ]
+  },
+  "attribution": {
+    "hypotheses": [
+      {
+        "component": "tool_description",
+        "confidence": 0.84,
+        "evidence_refs": [
+          "experiment://refund-attribution/tool-description"
+        ],
+        "intervention": {
+          "description": "Replace only the ambiguous field descriptions with known-correct descriptions.",
+          "isolated": true,
+          "held_constant": [
+            "model",
+            "system_prompt",
+            "tool_schema",
+            "retrieval_context",
+            "temperature"
+          ],
+          "trials": [
+            {
+              "id": "intervention-01",
+              "failure_resolved": true,
+              "evidence_ref": "trace://intervention/refund-01"
+            },
+            {
+              "id": "intervention-02",
+              "failure_resolved": true,
+              "evidence_ref": "trace://intervention/refund-02"
+            },
+            {
+              "id": "intervention-03",
+              "failure_resolved": true,
+              "evidence_ref": "trace://intervention/refund-03"
+            }
+          ]
+        }
+      },
+      {
+        "component": "system_prompt",
+        "confidence": 0.28,
+        "evidence_refs": [
+          "experiment://refund-attribution/system-prompt"
+        ]
+      },
+      {
+        "component": "model_reasoning",
+        "confidence": 0.12,
+        "evidence_refs": [
+          "experiment://refund-attribution/model-swap"
+        ]
+      }
+    ]
+  },
+  "proposed_change": {
+    "component": "tool_description",
+    "summary": "Clarify that purchase_age_days, not account_age_days, controls refund eligibility.",
+    "prediction": "The agent will approve all eligible fixture cases and preserve decisions for ineligible and unrelated account searches.",
+    "expected_unaffected_behaviors": [
+      "Read-only account lookups continue to use account_age_days.",
+      "Refunds older than 30 days remain ineligible.",
+      "Escalation rules for damaged goods remain unchanged."
+    ],
+    "known_risks": [
+      "The longer tool description may add a small token and latency cost."
+    ],
+    "changed_surface_count": 1,
+    "change_ref": "tfvc://$/ProofBeforePatch/changes/refund-tool-description-001"
+  },
+  "null_hypothesis": {
+    "statement": "No harness modification is necessary; the failures are transient model errors.",
+    "evidence_against": [
+      "The failure reproduced in three deterministic replays.",
+      "Changing only the tool description resolved all three intervention trials."
+    ]
+  },
+  "validation": {
+    "cases": [
+      {
+        "id": "positive-eligible-refund-01",
+        "kind": "positive",
+        "critical": true,
+        "baseline_passed": false,
+        "candidate_passed": true,
+        "evidence_ref": "eval://refund/positive-01"
+      },
+      {
+        "id": "positive-eligible-refund-02",
+        "kind": "positive",
+        "critical": true,
+        "baseline_passed": false,
+        "candidate_passed": true,
+        "evidence_ref": "eval://refund/positive-02"
+      },
+      {
+        "id": "negative-ineligible-refund",
+        "kind": "negative",
+        "critical": true,
+        "baseline_passed": true,
+        "candidate_passed": true,
+        "evidence_ref": "eval://refund/negative-01"
+      },
+      {
+        "id": "negative-authorized-exception",
+        "kind": "negative",
+        "critical": true,
+        "baseline_passed": true,
+        "candidate_passed": true,
+        "evidence_ref": "eval://refund/negative-02"
+      },
+      {
+        "id": "regression-account-lookup",
+        "kind": "regression",
+        "critical": false,
+        "baseline_passed": true,
+        "candidate_passed": true,
+        "evidence_ref": "eval://support/regression-01"
+      },
+      {
+        "id": "regression-damaged-goods",
+        "kind": "regression",
+        "critical": true,
+        "baseline_passed": true,
+        "candidate_passed": true,
+        "evidence_ref": "eval://support/regression-02"
+      },
+      {
+        "id": "regression-order-status",
+        "kind": "regression",
+        "critical": false,
+        "baseline_passed": true,
+        "candidate_passed": true,
+        "evidence_ref": "eval://support/regression-03"
+      },
+      {
+        "id": "regression-address-change",
+        "kind": "regression",
+        "critical": false,
+        "baseline_passed": true,
+        "candidate_passed": true,
+        "evidence_ref": "eval://support/regression-04"
+      }
+    ],
+    "metrics": {
+      "baseline": {
+        "p95_latency_ms": 820,
+        "mean_cost_usd": 0.012,
+        "mean_tokens": 2400
+      },
+      "candidate": {
+        "p95_latency_ms": 790,
+        "mean_cost_usd": 0.0122,
+        "mean_tokens": 2440
+      }
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure investigation selection",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "candidate_only": {
+      "const": true
+    },
+    "causal_claims_inferred": {
+      "const": false
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "path": {
+          "const": "investigation-fixture.json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "byte_count",
+        "path",
+        "sha256"
+      ]
+    },
+    "gate_eligible": {
+      "const": false
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "path": {
+          "const": "trace-manifest.json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "byte_count",
+        "path",
+        "sha256"
+      ]
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "selected_cluster_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^trace-[a-f0-9]{64}$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "raw_content_stored": {
+          "const": false
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "byte_count",
+        "raw_content_stored",
+        "sha256"
+      ]
+    }
+  },
+  "required": [
+    "candidate_only",
+    "causal_claims_inferred",
+    "fixture",
+    "gate_eligible",
+    "manifest",
+    "schema_version",
+    "selected_cluster_ids",
+    "source"
+  ]
+}

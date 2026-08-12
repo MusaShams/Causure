@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team HTTP case-publication request",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "change_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 6990508,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "review_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 6990508,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "azure_publication": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1398104,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "azure_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1398104,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "approval_verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1398104,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "canary_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 2796204,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "expected_head_sha256": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      ]
+    },
+    "retention_class_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    }
+  },
+  "required": [
+    "case_id",
+    "change_case",
+    "review_result",
+    "expected_head_sha256"
+  ],
+  "dependentRequired": {
+    "azure_publication": [
+      "azure_verification"
+    ],
+    "azure_verification": [
+      "azure_publication"
+    ],
+    "approval_verification": [
+      "azure_publication",
+      "azure_verification"
+    ]
+  }
+}

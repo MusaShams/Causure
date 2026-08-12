@@ -1,0 +1,59 @@
+name: Research or feature proposal
+description: Propose a bounded harness process, evidence rule, integration, or study.
+title: "[Proposal]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Strong proposals identify a real decision gap, the evidence needed to close it,
+        and the smallest intervention that could be evaluated safely.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or decision gap
+      description: What current agentic-harness failure or company workflow is not covered?
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_process
+    attributes:
+      label: Current process and evidence
+      description: Explain how the problem is handled today and cite reproducible evidence.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_intervention
+    attributes:
+      label: Proposed intervention
+      description: Describe the smallest new process, control, or experiment to add.
+    validations:
+      required: true
+
+  - type: textarea
+    id: falsification
+    attributes:
+      label: Controls and falsification
+      description: What negative controls, counterexamples, or stopping rule would disprove it?
+    validations:
+      required: true
+
+  - type: textarea
+    id: adoption
+    attributes:
+      label: Company adoption path
+      description: Who would operate it, what systems would it touch, and what remains external?
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope confirmation
+      options:
+        - label: I considered whether no harness change is the correct outcome.
+          required: true
+        - label: I did not include confidential company data or credentials.
+          required: true

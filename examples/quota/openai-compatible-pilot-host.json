@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "quota_configuration": {
+    "path": "/run/configs/openai-quota.json",
+    "sha256": "20fb49a7e06aba42a5c440c27d87f910f77c454e9831aa6b51ce5621a94ca6c4",
+    "byte_count": 746
+  },
+  "database": {
+    "path": "/var/lib/causure/quota.sqlite3",
+    "busy_timeout_ms": 5000
+  },
+  "secrets": {
+    "admin_token_path": "/run/secrets/openai_quota_admin_token",
+    "provider_api_key_path": "/run/secrets/openai_provider_api_key"
+  },
+  "server": {
+    "implementation": "waitress",
+    "version": "3.0.2",
+    "listen_host": "0.0.0.0",
+    "listen_port": 8080,
+    "trusted_external_scheme": "https",
+    "threads": 8,
+    "connection_limit": 128,
+    "backlog": 64,
+    "channel_timeout_seconds": 40,
+    "max_request_header_bytes": 8192
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure redacted trace manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "collector_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "format": {
+          "enum": [
+            "otlp-json"
+          ]
+        },
+        "media_type": {
+          "const": "application/json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "trace_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "span_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_embedded": {
+          "const": false
+        }
+      },
+      "required": [
+        "artifact_id",
+        "format",
+        "media_type",
+        "sha256",
+        "byte_count",
+        "trace_count",
+        "span_count",
+        "source_embedded"
+      ]
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "strategy": {
+          "enum": [
+            "metadata-allowlist-v1"
+          ]
+        },
+        "raw_content_included": {
+          "const": false
+        },
+        "retained_attribute_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redacted_attribute_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dropped_attribute_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "omitted_field_groups": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "resource_attributes",
+              "scope_attributes",
+              "span_events",
+              "span_links",
+              "span_names",
+              "span_status_messages"
+            ]
+          },
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "strategy",
+        "raw_content_included",
+        "retained_attribute_count",
+        "redacted_attribute_count",
+        "dropped_attribute_count",
+        "omitted_field_groups"
+      ]
+    },
+    "spans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "evidence_ref": {
+            "type": "string",
+            "pattern": "^trace-sha256://[a-f0-9]{64}/spans/[a-f0-9]{64}$"
+          },
+          "trace_id_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "span_id_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "parent_span_id_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "start_time_unix_nano": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "end_time_unix_nano": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "duration_nano": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "kind": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "status_code": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "embedding.model_name": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "gen_ai.operation.name": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "gen_ai.provider.name": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "gen_ai.request.model": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "gen_ai.response.model": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "llm.model_name": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "llm.provider": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "llm.system": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+              },
+              "openinference.span.kind": {
+                "enum": [
+                  "AGENT",
+                  "CHAIN",
+                  "EMBEDDING",
+                  "EVALUATOR",
+                  "GUARDRAIL",
+                  "LLM",
+                  "PROMPT",
+                  "RERANKER",
+                  "RETRIEVER",
+                  "TOOL"
+                ]
+              },
+              "gen_ai.usage.completion_tokens": {
+                "type": "number",
+                "minimum": 0
+              },
+              "gen_ai.usage.input_tokens": {
+                "type": "number",
+                "minimum": 0
+              },
+              "gen_ai.usage.output_tokens": {
+                "type": "number",
+                "minimum": 0
+              },
+              "gen_ai.usage.prompt_tokens": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.completion": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.completion_details.audio": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.completion_details.output": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.completion_details.reasoning": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.prompt": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.prompt_details.audio": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.prompt_details.cache_input": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.prompt_details.cache_read": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.prompt_details.cache_write": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.prompt_details.input": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.cost.total": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.completion": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.completion_details.audio": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.completion_details.reasoning": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.prompt": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.prompt_details.audio": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.prompt_details.cache_read": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.prompt_details.cache_write": {
+                "type": "number",
+                "minimum": 0
+              },
+              "llm.token_count.total": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "required": [
+          "evidence_ref",
+          "trace_id_sha256",
+          "span_id_sha256",
+          "attributes"
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "collector_version",
+    "source",
+    "redaction",
+    "spans"
+  ]
+}

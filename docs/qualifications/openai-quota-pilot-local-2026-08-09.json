@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "result": "passed",
+  "scope": "offline-local-pilot-no-provider-request",
+  "package_version": "0.4.0a17",
+  "started_at_utc": "2026-08-10T00:06:12.6584259+00:00",
+  "finished_at_utc": "2026-08-10T00:06:40.2613575+00:00",
+  "evidence": {
+    "host_os": "Microsoft Windows NT 10.0.26200.0",
+    "docker": {
+      "version": "29.6.2",
+      "compose_version": "5.3.1",
+      "platform": "Docker Desktop|linux|x86_64"
+    },
+    "images": {
+      "quota_core_requested": "sha256:806e68970bddcd97257c3743d1788dc2044c8941941df3b32925d003df373cbc",
+      "quota_core_id": "sha256:806e68970bddcd97257c3743d1788dc2044c8941941df3b32925d003df373cbc",
+      "quota_edge_requested": "sha256:d616fb5ec1296bc79e94f5fdfbf83b1c7391b8804bec843a215e497f8fe6d120",
+      "quota_edge_id": "sha256:d616fb5ec1296bc79e94f5fdfbf83b1c7391b8804bec843a215e497f8fe6d120",
+      "probe_image": "python@sha256:9662417aace5ae7b8e2609cce472b72a8958e134ba372808abe9cc1a0c0125e6"
+    },
+    "state_manifest_sha256": "10d80a9ef69e17de0ba01a339c638b4334ca4ab61ebb42988b517a8d41b1f2d2",
+    "deployment_subjects": {
+      "compose_sha256": "03652f8c4d7fd136208ed519816a3ba24a24535c5ba6dae7095c7d195da2b8fa",
+      "worker_edge_sha256": "59438d10fce49eb156dc64c940c633e9a9ce21d32315d4f2870de88fd6aafaec",
+      "admin_edge_sha256": "b83e22d3a950c903082ac36edf70c2ee7b81fb442546b59cfce5b7dba57fcc5b",
+      "core_dockerfile_sha256": "f4d8234e98377f5ebdffcdfb82e33907da900c8e39ceff0ee360a599a6fc5652",
+      "edge_dockerfile_sha256": "be4ac1847e239da52688977f59b00c73cd6ea06ce4fe0f5f44c22be7ed2c5e72",
+      "build_script_sha256": "bb1219e0237cac698332861c160c73f5075381aec783cc367840aa11ac2ad676",
+      "qualification_script_sha256": "ea38cffe957d2d828d7dc1927b20ee137b1862213bb7ed199ae376dcff34fdf1"
+    },
+    "health": {
+      "admin_health_status": 200,
+      "admin_readiness_status": 200,
+      "worker_health_status": 200
+    },
+    "route_isolation": {
+      "worker_cannot_reach_admin": true,
+      "admin_cannot_reach_worker_responses": true
+    },
+    "network": {
+      "worker_internal": true,
+      "worker_attachable": true,
+      "exclusive_member": "openai-quota",
+      "live_membership": {
+        "openai-quota-core": [
+          "proofbeforepatch-quota-backend",
+          "proofbeforepatch-quota-egress"
+        ],
+        "openai-quota": [
+          "proofbeforepatch-quota",
+          "proofbeforepatch-quota-backend"
+        ],
+        "openai-quota-admin": [
+          "proofbeforepatch-quota-admin-control",
+          "proofbeforepatch-quota-backend"
+        ]
+      },
+      "admin_host_ip": "127.0.0.1",
+      "admin_host_port": 19443,
+      "direct_provider_tcp_blocked": true,
+      "blocked_failure_type": "gaierror"
+    },
+    "restart": {
+      "core_restarted": true,
+      "readiness_recovered": true,
+      "pre_restart_lease_canceled_after_restart": true
+    },
+    "runtime": {
+      "non_root_user": "65532:65532",
+      "read_only_roots": true,
+      "all_capabilities_dropped": true,
+      "no_new_privileges": true
+    },
+    "provider": {
+      "live_api_request_performed": false,
+      "invoice_reconciliation_performed": false
+    }
+  },
+  "cleanup": {
+    "containers_absent": true,
+    "networks_absent": true,
+    "disposable_volume_absent": true,
+    "prepared_state_preserved": true,
+    "errors": []
+  },
+  "limitations": [
+    "No provider API request or invoice reconciliation was performed.",
+    "The admin control bridge is non-internal for Docker Desktop loopback publication.",
+    "Docker daemon, host kernel, protected state ACLs, model identity, and prices remain trusted deployment inputs.",
+    "This receipt is not production hard-spend qualification."
+  ],
+  "failure": null
+}

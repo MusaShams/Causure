@@ -1,0 +1,133 @@
+name: Causure evidence gate
+description: Select and review an agent change case, verify its pull-request binding, and publish a safe Check Run when permitted.
+author: Causure contributors
+
+inputs:
+  case:
+    description: Optional explicit change-case path; omit with component-path for configured automatic selection.
+    required: false
+    default: ""
+  component-path:
+    description: Optional explicit annotation path; omit with case for configured automatic selection.
+    required: false
+    default: ""
+  config:
+    description: Canonical project configuration used for automatic component and policy selection.
+    required: false
+    default: .causure/config.json
+  repository-root:
+    description: Optional checkout root beneath GITHUB_WORKSPACE for protected multi-checkout workflows.
+    required: false
+    default: .
+  policy:
+    description: Optional repository-relative sparse gate-policy JSON path.
+    required: false
+    default: ""
+  output-directory:
+    description: Repository-relative directory for exact review and publication artifacts.
+    required: false
+    default: .causure/github
+  publish-check:
+    description: Use auto for same-repository publication and fork-safe skipping, required to fail without publication, or disabled for offline-only review.
+    required: false
+    default: auto
+  github-token:
+    description: Pass github.token for read-only PR discovery and permitted same-repository publication; never use a PAT.
+    required: true
+  allow-conditional:
+    description: Whether conditional_pass may produce a successful check and process exit.
+    required: false
+    default: "false"
+  maximum-age-seconds:
+    description: Maximum age accepted when the exact publication is reverified.
+    required: false
+    default: "3600"
+  timeout-seconds:
+    description: Bounded GitHub Checks API request timeout.
+    required: false
+    default: "15"
+
+outputs:
+  decision:
+    description: Deterministic gate decision, or not_applicable when no configured component changed.
+    value: ${{ steps.run.outputs.decision }}
+  recommended-action:
+    description: Deterministic next action, or no_review when no configured component changed.
+    value: ${{ steps.run.outputs.recommended-action }}
+  check-published:
+    description: Whether GitHub accepted an explicit Check Run.
+    value: ${{ steps.run.outputs.check-published }}
+  check-publication-status:
+    description: published, fork_skipped, disabled, or not_applicable.
+    value: ${{ steps.run.outputs.check-publication-status }}
+  selection-mode:
+    description: configured for automatic matching or explicit for caller overrides.
+    value: ${{ steps.run.outputs.selection-mode }}
+  selection-status:
+    description: reviewed or no_match.
+    value: ${{ steps.run.outputs.selection-status }}
+  component-id:
+    description: Configured component ID, explicit, or not-applicable.
+    value: ${{ steps.run.outputs.component-id }}
+  selected-case:
+    description: Selected repository-relative case path or not-applicable.
+    value: ${{ steps.run.outputs.selected-case }}
+  selected-component-path:
+    description: Selected changed path used for annotations or not-applicable.
+    value: ${{ steps.run.outputs.selected-component-path }}
+  artifact-retention-days:
+    description: Configured evidence retention for a caller-owned upload step.
+    value: ${{ steps.run.outputs.artifact-retention-days }}
+  result:
+    description: Exact machine-readable review-result path.
+    value: ${{ steps.run.outputs.result }}
+  report:
+    description: Exact Markdown evidence-report path.
+    value: ${{ steps.run.outputs.report }}
+  publication:
+    description: Exact GitHub review-publication path.
+    value: ${{ steps.run.outputs.publication }}
+  verification:
+    description: Exact GitHub review-verification path.
+    value: ${{ steps.run.outputs.verification }}
+  check-request:
+    description: Exact token-free Check Run request path.
+    value: ${{ steps.run.outputs.check-request }}
+  check-summary:
+    description: Exact minimized Check Run Markdown summary path.
+    value: ${{ steps.run.outputs.check-summary }}
+  check-receipt:
+    description: Exact Check Run receipt path or not-published.
+    value: ${{ steps.run.outputs.check-receipt }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up the pinned Python runtime
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      with:
+        python-version: "3.13"
+
+    - name: Run the isolated Causure gate
+      id: run
+      shell: pwsh
+      env:
+        CAUSURE_CASE: ${{ inputs.case }}
+        CAUSURE_COMPONENT_PATH: ${{ inputs.component-path }}
+        CAUSURE_CONFIG: ${{ inputs.config }}
+        CAUSURE_REPOSITORY_ROOT: ${{ inputs.repository-root }}
+        CAUSURE_POLICY: ${{ inputs.policy }}
+        CAUSURE_OUTPUT_DIRECTORY: ${{ inputs.output-directory }}
+        CAUSURE_PUBLISH_CHECK: ${{ inputs.publish-check }}
+        CAUSURE_GITHUB_TOKEN: ${{ inputs.github-token }}
+        CAUSURE_ALLOW_CONDITIONAL: ${{ inputs.allow-conditional }}
+        CAUSURE_MAXIMUM_AGE_SECONDS: ${{ inputs.maximum-age-seconds }}
+        CAUSURE_TIMEOUT_SECONDS: ${{ inputs.timeout-seconds }}
+      run: |
+        $runner = Join-Path $env:GITHUB_ACTION_PATH "scripts/run_github_action.py"
+        python -I $runner
+        exit $LASTEXITCODE
+
+branding:
+  icon: shield
+  color: blue

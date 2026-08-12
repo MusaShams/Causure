@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure canary comparison result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "engine_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "comparison_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "look_number": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "maximum_looks": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "change_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+    },
+    "policy_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "evaluator_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+    },
+    "assignment_method": {
+      "enum": [
+        "randomized",
+        "deterministic_hash"
+      ]
+    },
+    "assignment_unit": {
+      "enum": [
+        "request",
+        "session",
+        "principal",
+        "tenant"
+      ]
+    },
+    "observation_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "policy_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "change_case_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "review_result_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "compared_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "window_started_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "window_ended_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "observation_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2592000
+    },
+    "baseline_deployment_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+    },
+    "candidate_deployment_ref": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@#$%?=&-]{0,511}$"
+    },
+    "baseline_sample_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "candidate_sample_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000000
+    },
+    "confidence_level": {
+      "type": "number",
+      "minimum": 0.9,
+      "maximum": 0.999
+    },
+    "decision": {
+      "enum": [
+        "promote",
+        "continue",
+        "rollback",
+        "needs_evidence"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8192,
+      "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "fail",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8192,
+            "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+          }
+        },
+        "required": [
+          "code",
+          "status",
+          "message"
+        ]
+      },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "metric_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+          },
+          "direction": {
+            "enum": [
+              "higher",
+              "lower"
+            ]
+          },
+          "maximum_degradation": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "baseline_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "candidate_rate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "observed_difference": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          },
+          "confidence_lower": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          },
+          "confidence_upper": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          },
+          "status": {
+            "enum": [
+              "noninferior",
+              "regression",
+              "inconclusive"
+            ]
+          }
+        },
+        "required": [
+          "metric_id",
+          "direction",
+          "maximum_degradation",
+          "baseline_rate",
+          "candidate_rate",
+          "observed_difference",
+          "confidence_lower",
+          "confidence_upper",
+          "status"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 50
+    }
+  },
+  "required": [
+    "schema_version",
+    "engine_version",
+    "comparison_id",
+    "look_number",
+    "maximum_looks",
+    "case_id",
+    "change_ref",
+    "policy_id",
+    "evaluator_ref",
+    "assignment_method",
+    "assignment_unit",
+    "observation_sha256",
+    "policy_sha256",
+    "change_case_sha256",
+    "review_result_sha256",
+    "compared_at",
+    "window_started_at",
+    "window_ended_at",
+    "observation_seconds",
+    "baseline_deployment_ref",
+    "candidate_deployment_ref",
+    "baseline_sample_count",
+    "candidate_sample_count",
+    "confidence_level",
+    "decision",
+    "summary",
+    "checks",
+    "metrics"
+  ]
+}

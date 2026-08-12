@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "result": "failed",
+  "scope": "offline-local-pilot-no-provider-request",
+  "package_version": "0.4.0a17",
+  "started_at_utc": "2026-08-10T00:04:42.3112470+00:00",
+  "finished_at_utc": "2026-08-10T00:05:10.5179892+00:00",
+  "evidence": {},
+  "cleanup": {
+    "containers_absent": true,
+    "networks_absent": true,
+    "disposable_volume_absent": true,
+    "prepared_state_preserved": true,
+    "errors": []
+  },
+  "limitations": [
+    "No provider API request or invoice reconciliation was performed.",
+    "The admin control bridge is non-internal for Docker Desktop loopback publication.",
+    "Docker daemon, host kernel, protected state ACLs, model identity, and prices remain trusted deployment inputs.",
+    "This receipt is not production hard-spend qualification."
+  ],
+  "failure": {
+    "stage": "runtime_hardening",
+    "type": "System.Management.Automation.PropertyNotFoundException",
+    "message": "qualification failed during runtime_hardening"
+  }
+}

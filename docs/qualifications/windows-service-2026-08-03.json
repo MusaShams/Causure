@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "result": "passed",
+  "os": {
+    "caption": "Microsoft Windows 11 Pro",
+    "version": "10.0.26200.0",
+    "build": 26200
+  },
+  "runtime": {
+    "python": "3.13.5",
+    "proofbeforepatch": "0.4.0a14",
+    "pywin32": "312",
+    "waitress": "3.0.2",
+    "isolated_service_executable": true
+  },
+  "package": {
+    "wheel_sha256": "905ec3c0ab439fcf232564b98a01c97f18a1bd84e38b374f6ad2d910762f3e42"
+  },
+  "registration": {
+    "service_name": "ProofBeforePatchTeam",
+    "display_name": "ProofBeforePatch Team Service",
+    "account": "NT SERVICE\\ProofBeforePatchTeam",
+    "start_mode": "Manual",
+    "sid_type": "UNRESTRICTED",
+    "host_configuration_sha256": "a1341c0b0bdca5069492a1aff0f4a6ff593f0f534a0f29cc63e6a55d21a0cb69",
+    "host_configuration_byte_count": 1333,
+    "exact_subject_matched": true
+  },
+  "lifecycle": {
+    "install_left_stopped": true,
+    "scm_running": true,
+    "health_status": 200,
+    "readiness_status": 200,
+    "stop_reached_stopped": true,
+    "adapter_removed_service": true
+  },
+  "started_at_utc": "2026-08-03T20:29:23.0480914+00:00",
+  "finished_at_utc": "2026-08-03T20:29:59.9960158+00:00",
+  "cleanup": {
+    "service_absent": true,
+    "qualification_root_removed": true
+  }
+}

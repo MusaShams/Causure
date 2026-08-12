@@ -1,0 +1,1213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team dashboard case record",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "tenant_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "sources": {
+      "$ref": "#/$defs/sources"
+    },
+    "evidence": {
+      "$ref": "#/$defs/evidence"
+    },
+    "review": {
+      "$ref": "#/$defs/review"
+    },
+    "delivery": {
+      "$ref": "#/$defs/delivery"
+    },
+    "approval": {
+      "$ref": "#/$defs/approval"
+    },
+    "canary": {
+      "$ref": "#/$defs/canary"
+    }
+  },
+  "required": [
+    "schema_version",
+    "tenant_id",
+    "case_id",
+    "revision",
+    "published_at",
+    "sources",
+    "evidence",
+    "review"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "sources": {
+            "required": [
+              "azure_publication"
+            ]
+          }
+        },
+        "required": [
+          "sources"
+        ]
+      },
+      "then": {
+        "required": [
+          "delivery"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "delivery"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "sources": {
+            "required": [
+              "approval_verification"
+            ]
+          }
+        },
+        "required": [
+          "sources"
+        ]
+      },
+      "then": {
+        "required": [
+          "approval"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "approval"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "sources": {
+            "required": [
+              "canary_result"
+            ]
+          }
+        },
+        "required": [
+          "sources"
+        ]
+      },
+      "then": {
+        "required": [
+          "canary"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "canary"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "approval": {
+            "properties": {
+              "action": {
+                "const": "approve"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        },
+        "required": [
+          "approval"
+        ]
+      },
+      "then": {
+        "properties": {
+          "review": {
+            "properties": {
+              "decision": {
+                "const": "approve"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "approval": {
+            "properties": {
+              "action": {
+                "const": "exception"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        },
+        "required": [
+          "approval"
+        ]
+      },
+      "then": {
+        "properties": {
+          "review": {
+            "properties": {
+              "decision": {
+                "enum": [
+                  "conditional_pass",
+                  "reject",
+                  "needs_evidence",
+                  "human_review"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "change_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.change-case+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5242880
+        },
+        "canonical_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count",
+        "canonical_sha256"
+      ]
+    },
+    "review_result_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.review-result+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5242880
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "review_report_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "text/markdown; charset=utf-8"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2097152
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "azure_publication_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.azure-review-publication+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "azure_verification_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.azure-review-verification+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "approval_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.approval-verification+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "approval_assertion_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.approval-assertion+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "canary_subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "media_type": {
+          "const": "application/vnd.causure.canary-result+json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2097152
+        }
+      },
+      "required": [
+        "media_type",
+        "sha256",
+        "byte_count"
+      ]
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "change_case": {
+          "$ref": "#/$defs/change_subject"
+        },
+        "review_result": {
+          "$ref": "#/$defs/review_result_subject"
+        },
+        "review_report": {
+          "$ref": "#/$defs/review_report_subject"
+        },
+        "azure_publication": {
+          "$ref": "#/$defs/azure_publication_subject"
+        },
+        "azure_verification": {
+          "$ref": "#/$defs/azure_verification_subject"
+        },
+        "approval_verification": {
+          "$ref": "#/$defs/approval_subject"
+        },
+        "canary_result": {
+          "$ref": "#/$defs/canary_subject"
+        }
+      },
+      "required": [
+        "change_case",
+        "review_result"
+      ],
+      "dependentRequired": {
+        "review_report": [
+          "azure_publication",
+          "azure_verification"
+        ],
+        "azure_publication": [
+          "review_report",
+          "azure_verification"
+        ],
+        "azure_verification": [
+          "review_report",
+          "azure_publication"
+        ],
+        "approval_verification": [
+          "review_report",
+          "azure_publication",
+          "azure_verification"
+        ]
+      }
+    },
+    "hypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "component": {
+          "enum": [
+            "system_prompt",
+            "tool_description",
+            "tool_schema",
+            "model_routing",
+            "retrieval_configuration",
+            "reviewer",
+            "verification_step",
+            "retry_policy",
+            "stopping_policy",
+            "memory_policy",
+            "tool_implementation",
+            "evaluator",
+            "environment",
+            "model_reasoning",
+            "requirement",
+            "other"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "intervention_present": {
+          "type": "boolean"
+        },
+        "intervention_trial_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "intervention_resolved_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "intervention_isolated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "component",
+        "confidence",
+        "evidence_count",
+        "intervention_present",
+        "intervention_trial_count",
+        "intervention_resolved_count"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "intervention_present": {
+                "const": true
+              }
+            },
+            "required": [
+              "intervention_present"
+            ]
+          },
+          "then": {
+            "required": [
+              "intervention_isolated"
+            ]
+          },
+          "else": {
+            "properties": {
+              "intervention_trial_count": {
+                "const": 0
+              },
+              "intervention_resolved_count": {
+                "const": 0
+              }
+            },
+            "not": {
+              "required": [
+                "intervention_isolated"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "requirement_status": {
+          "enum": [
+            "clear",
+            "ambiguous",
+            "conflicting",
+            "unknown"
+          ]
+        },
+        "oracle_kind": {
+          "enum": [
+            "exact_match",
+            "executable",
+            "policy",
+            "human_label",
+            "consensus",
+            "custom"
+          ]
+        },
+        "oracle_independent": {
+          "type": "boolean"
+        },
+        "reproduction_trial_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "reproduced_trial_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hypothesis"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        },
+        "proposed_component": {
+          "enum": [
+            "system_prompt",
+            "tool_description",
+            "tool_schema",
+            "model_routing",
+            "retrieval_configuration",
+            "reviewer",
+            "verification_step",
+            "retry_policy",
+            "stopping_policy",
+            "memory_policy",
+            "tool_implementation",
+            "evaluator",
+            "environment",
+            "model_reasoning",
+            "requirement",
+            "other"
+          ]
+        },
+        "proposed_summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "prediction": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "change_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "changed_surface_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "known_risk_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "validation_case_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "validation_candidate_passed_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "validation_critical_failed_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "title",
+        "created_at",
+        "severity",
+        "requirement_status",
+        "oracle_kind",
+        "oracle_independent",
+        "reproduction_trial_count",
+        "reproduced_trial_count",
+        "hypotheses",
+        "proposed_component",
+        "proposed_summary",
+        "prediction",
+        "change_ref",
+        "changed_surface_count",
+        "known_risk_count",
+        "validation_case_count",
+        "validation_candidate_passed_count",
+        "validation_critical_failed_count"
+      ]
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "warning"
+          ]
+        },
+        "consequence": {
+          "enum": [
+            "none",
+            "conditional",
+            "needs_evidence",
+            "reject",
+            "human_review"
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "status",
+        "consequence"
+      ]
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "engine_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "policy_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "reviewed_at": {
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "decision": {
+          "enum": [
+            "approve",
+            "conditional_pass",
+            "reject",
+            "needs_evidence",
+            "human_review"
+          ]
+        },
+        "recommended_action": {
+          "enum": [
+            "patch",
+            "do_not_patch",
+            "collect_evidence",
+            "escalate"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/finding"
+          },
+          "maxItems": 128
+        }
+      },
+      "required": [
+        "engine_version",
+        "policy_name",
+        "reviewed_at",
+        "decision",
+        "recommended_action",
+        "summary",
+        "findings"
+      ]
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "published_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "server_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^\\$/[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "target_kind": {
+          "enum": [
+            "changeset",
+            "shelveset"
+          ]
+        },
+        "changeset_id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "shelveset_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "shelveset_owner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "build_id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "build_number": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "work_item_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "maxItems": 10000,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "published_at",
+        "verified_at",
+        "server_path",
+        "target_kind",
+        "build_id",
+        "build_number",
+        "work_item_ids"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "changeset"
+              }
+            },
+            "required": [
+              "target_kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "changeset_id"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "shelveset_name"
+                  ]
+                },
+                {
+                  "required": [
+                    "shelveset_owner"
+                  ]
+                }
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "shelveset_name",
+              "shelveset_owner"
+            ],
+            "not": {
+              "required": [
+                "changeset_id"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "checked_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "assertion": {
+          "$ref": "#/$defs/approval_assertion_subject"
+        },
+        "authority_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "key_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "identity_provider": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "subject_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "authentication_method": {
+          "enum": [
+            "azure_devops_approval",
+            "organizational_sso"
+          ]
+        },
+        "authentication_event_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "action": {
+          "enum": [
+            "approve",
+            "exception"
+          ]
+        },
+        "gate_effect": {
+          "enum": [
+            "record_only"
+          ]
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "trust_store_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "revocation_list_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+        },
+        "revocation_list_updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "exception_finding_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+          },
+          "maxItems": 64,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "checked_at",
+        "assertion",
+        "authority_id",
+        "key_id",
+        "identity_provider",
+        "subject_id",
+        "authentication_method",
+        "authentication_event_id",
+        "action",
+        "gate_effect",
+        "issued_at",
+        "expires_at",
+        "trust_store_id",
+        "revocation_list_id",
+        "revocation_list_updated_at",
+        "exception_finding_codes"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "exception"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "then": {
+            "properties": {
+              "exception_finding_codes": {
+                "minItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "exception_finding_codes": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "canary_metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "metric_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "direction": {
+          "enum": [
+            "higher",
+            "lower"
+          ]
+        },
+        "maximum_degradation": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "baseline_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "candidate_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "confidence_lower": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "confidence_upper": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "status": {
+          "enum": [
+            "noninferior",
+            "regression",
+            "inconclusive"
+          ]
+        }
+      },
+      "required": [
+        "metric_id",
+        "direction",
+        "maximum_degradation",
+        "baseline_rate",
+        "candidate_rate",
+        "confidence_lower",
+        "confidence_upper",
+        "status"
+      ]
+    },
+    "canary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "comparison_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "look_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "maximum_looks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "policy_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "evaluator_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "assignment_method": {
+          "enum": [
+            "randomized",
+            "deterministic_hash"
+          ]
+        },
+        "assignment_unit": {
+          "enum": [
+            "request",
+            "session",
+            "principal",
+            "tenant"
+          ]
+        },
+        "compared_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "window_started_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "window_ended_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+        },
+        "baseline_deployment_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "candidate_deployment_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "baseline_sample_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000000
+        },
+        "candidate_sample_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000000
+        },
+        "confidence_level": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 0.999
+        },
+        "decision": {
+          "enum": [
+            "promote",
+            "continue",
+            "rollback",
+            "needs_evidence"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192,
+          "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/canary_metric"
+          },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "required": [
+        "comparison_id",
+        "look_number",
+        "maximum_looks",
+        "policy_id",
+        "evaluator_ref",
+        "assignment_method",
+        "assignment_unit",
+        "compared_at",
+        "window_started_at",
+        "window_ended_at",
+        "baseline_deployment_ref",
+        "candidate_deployment_ref",
+        "baseline_sample_count",
+        "candidate_sample_count",
+        "confidence_level",
+        "decision",
+        "summary",
+        "metrics"
+      ]
+    }
+  }
+}

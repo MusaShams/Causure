@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team access policy",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "tenant_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    },
+    "policy_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "effective_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "default_retention_class_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    },
+    "memberships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "principal": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "identity_provider": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+              },
+              "subject_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+              }
+            },
+            "required": [
+              "identity_provider",
+              "subject_id"
+            ]
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "investigator",
+                "policy_administrator",
+                "approver"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "principal",
+          "roles"
+        ]
+      },
+      "maxItems": 10000,
+      "uniqueItems": true
+    },
+    "retention_classes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "class_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+          },
+          "minimum_days": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3650
+          }
+        },
+        "required": [
+          "class_id",
+          "minimum_days"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "tenant_id",
+    "policy_id",
+    "revision",
+    "effective_at",
+    "default_retention_class_id",
+    "memberships",
+    "retention_classes"
+  ]
+}

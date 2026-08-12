@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools==83.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "causure"
+version = "0.4.0a18"
+description = "Causal assurance and evidence-gated change control for production AI agents"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [
+  { name = "Causure contributors" },
+]
+keywords = [
+  "ai-agents",
+  "ai-governance",
+  "causal-inference",
+  "change-control",
+  "ci",
+  "evaluation",
+  "reliability",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.optional-dependencies]
+approval = [
+  "cryptography==50.0.0",
+]
+attestation = [
+  "cryptography==50.0.0",
+]
+entra = [
+  "cryptography==50.0.0",
+  "PyJWT==2.13.0",
+]
+service = [
+  "cryptography==50.0.0",
+  "PyJWT==2.13.0",
+  "waitress==3.0.2",
+]
+quota-service = [
+  "waitress==3.0.2",
+]
+quota-pilot = [
+  "cryptography==50.0.0",
+  "waitress==3.0.2",
+]
+windows-service = [
+  "cryptography==50.0.0",
+  "PyJWT==2.13.0",
+  "pywin32==312; sys_platform == 'win32'",
+  "waitress==3.0.2",
+]
+dev = [
+  "cryptography==50.0.0",
+  "PyJWT==2.13.0",
+  "pywin32==312; sys_platform == 'win32'",
+  "ruff==0.16.2",
+  "waitress==3.0.2",
+]
+
+[project.scripts]
+causure = "causure.cli:main"
+causure-windows-service = "causure.team_windows_service_cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+causure = ["py.typed", "demo/*.json"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]

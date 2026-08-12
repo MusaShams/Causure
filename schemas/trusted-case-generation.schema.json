@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure trusted case-generation receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "adapter_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "directory_byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8388608
+        },
+        "directory_file_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "directory_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "entry_module_byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2097152
+        },
+        "entry_module_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "entry_module_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "entry_point": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.]{0,126}:[A-Za-z_][A-Za-z0-9_.]{0,126}$"
+        },
+        "kind": {
+          "const": "case_generator"
+        }
+      },
+      "required": [
+        "adapter_id",
+        "directory_byte_count",
+        "directory_file_count",
+        "directory_sha256",
+        "entry_module_byte_count",
+        "entry_module_path",
+        "entry_module_sha256",
+        "entry_point",
+        "kind"
+      ]
+    },
+    "change_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5242880
+        },
+        "case_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "byte_count",
+        "case_id",
+        "path",
+        "sha256"
+      ]
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "byte_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2097152
+        },
+        "change_ref": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 4096
+        },
+        "component": {
+          "enum": [
+            "system_prompt",
+            "tool_description",
+            "tool_schema",
+            "model_routing",
+            "retrieval_configuration",
+            "reviewer",
+            "verification_step",
+            "retry_policy",
+            "stopping_policy",
+            "memory_policy",
+            "tool_implementation",
+            "evaluator",
+            "environment",
+            "model_reasoning",
+            "requirement",
+            "other"
+          ]
+        },
+        "component_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "byte_count",
+        "change_ref",
+        "component",
+        "component_id",
+        "path",
+        "sha256"
+      ]
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "adapter_loaded_from_trusted_directory": {
+          "const": true
+        },
+        "candidate_code_executed": {
+          "const": false
+        },
+        "candidate_component_content_embedded_in_receipt": {
+          "const": false
+        },
+        "candidate_root_stored": {
+          "const": false
+        },
+        "maximum_case_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5242880
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 3600
+        }
+      },
+      "required": [
+        "adapter_loaded_from_trusted_directory",
+        "candidate_code_executed",
+        "candidate_component_content_embedded_in_receipt",
+        "candidate_root_stored",
+        "maximum_case_bytes",
+        "timeout_seconds"
+      ]
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "generator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "pull_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base_sha": {
+          "type": "string",
+          "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "head_sha": {
+          "type": "string",
+          "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "base_sha",
+        "head_sha",
+        "number",
+        "repository"
+      ]
+    },
+    "request_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "schema_version": {
+      "const": "1.0"
+    }
+  },
+  "required": [
+    "adapter",
+    "change_case",
+    "component",
+    "execution",
+    "generated_at",
+    "generator_version",
+    "project_id",
+    "pull_request",
+    "request_id",
+    "schema_version"
+  ]
+}

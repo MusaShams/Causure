@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "result": "passed",
+  "os": {
+    "caption": "Microsoft Windows 11 Pro",
+    "version": "10.0.26200.0",
+    "build": 26200
+  },
+  "bundle": {
+    "package_version": "0.4.0a15",
+    "bundle_sha256": "16ee1b521d70fa0670e1c2099843bc8a2ae22dd9520772748d6345ec1b6daf04",
+    "manifest_sha256": "2a625fb8af7e7b0ef1bed119fab055772c5870660c40234c29fe342747b41eab",
+    "manifest_file_count": 3318,
+    "closed_install_verified": true
+  },
+  "installation": {
+    "machine_runtime_path": "C:\\Program Files\\ProofBeforePatch\\Team\\0.4.0a15",
+    "receipt_bound_manifest": true,
+    "receipt_bound_host_configuration": true,
+    "manual_start": true,
+    "service_account": "NT SERVICE\\ProofBeforePatchTeam",
+    "exact_recovery_policy": true
+  },
+  "lifecycle": {
+    "initial_health_status": 200,
+    "initial_readiness_status": 200,
+    "crash_initial_pid": 14768,
+    "crash_recovered_pid": 8836,
+    "crash_recovery_elapsed_seconds": 121.69,
+    "recovered_health_status": 200,
+    "recovered_readiness_status": 200,
+    "configuration_drift_failed_closed": true,
+    "configuration_drift_output_redacted": true,
+    "port_collision_failed_closed": true,
+    "port_collision_output_redacted": true,
+    "adversarial_failure_recovery_actions": "qualification-temporary-none",
+    "exact_recovery_restored_after_adversarial_failures": true,
+    "post_failure_health_status": 200,
+    "post_failure_readiness_status": 200,
+    "remover_stopped_running_service": true
+  },
+  "removal": {
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "installed_manifest_absent": true,
+    "operator_paths_preserved": true,
+    "operator_acls_restored": true
+  },
+  "cold_boot": {
+    "performed": false,
+    "reason": "reboot requires separate explicit operator authorization"
+  },
+  "started_at_utc": "2026-08-09T18:14:33.4608008+00:00",
+  "finished_at_utc": "2026-08-09T18:18:48.8655162+00:00",
+  "cleanup": {
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "qualification_root_removed": true,
+    "errors": []
+  }
+}

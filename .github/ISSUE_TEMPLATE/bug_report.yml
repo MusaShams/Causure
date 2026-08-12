@@ -1,0 +1,76 @@
+name: Bug report
+description: Report a reproducible defect using synthetic or minimized data.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include secrets, personal data, production traces, or vulnerability details.
+        Use the repository Security tab to report a vulnerability privately.
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Provide the release version or full commit SHA you tested.
+      placeholder: 0.4.0a18 or 0123456789abcdef...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      options:
+        - Evidence gate or policy
+        - Trace collection or fixture generation
+        - Adapter or sandbox boundary
+        - Team service, API, or dashboard
+        - Azure DevOps or TFVC integration
+        - Packaging or deployment pilot
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and its impact.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Use only synthetic or minimized inputs and include exact commands.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version, and relevant runtime versions.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Data-safety confirmation
+      options:
+        - label: I removed credentials, personal data, production traces, and signed URLs.
+          required: true
+        - label: This report does not contain a security vulnerability or exploit details.
+          required: true

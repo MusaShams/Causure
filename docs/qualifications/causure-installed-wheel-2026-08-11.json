@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "qualification": "causure-rebrand-installed-wheel",
+  "performed_at": "2026-08-11T03:12:11Z",
+  "result": "passed",
+  "environment": {
+    "operating_system": "Microsoft Windows NT 10.0.26200.0",
+    "architecture": "X64",
+    "python_version": "3.13.5",
+    "installation": "fresh virtual environment with --no-index --no-deps local wheel install"
+  },
+  "distribution": {
+    "filename": "causure-0.4.0a18-py3-none-any.whl",
+    "byte_count": 371928,
+    "sha256": "022a148e6fabf7ba6004b52bbf20aa1fec48025a33fa6a053d3c21c2d81c081a"
+  },
+  "observations": {
+    "installed_module_source_suffix": "venv/Lib/site-packages/causure/__init__.py",
+    "distribution_version": "0.4.0a18",
+    "module_version": "0.4.0a18",
+    "legacy_wheel_paths_absent": true,
+    "legacy_import_namespace_absent": true,
+    "console_entry_point_executed": true,
+    "offline_synthetic_demo_completed": true,
+    "demo_decisions": [
+      "approve",
+      "reject"
+    ],
+    "network_used_for_install_or_demo": false
+  },
+  "limitations": [
+    "This receipt qualifies the local Python wheel, primary console entry point, and bundled synthetic demo only.",
+    "It does not qualify the rebranded Docker quota-pilot images, Windows service bundle, hosted deployment, or production provider contract.",
+    "The virtual environment was created on the development host rather than on an independent clean machine."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "assignment_method": "deterministic_hash",
+  "assignment_unit": "principal",
+  "confidence_level": 0.95,
+  "declared_at": "2026-07-29T12:00:00Z",
+  "evaluator_ref": "attestation://evaluators/company-outcomes-v1",
+  "maximum_looks": 3,
+  "metrics": [
+    {
+      "direction": "higher",
+      "maximum_degradation": 0.02,
+      "metric_id": "task_success"
+    },
+    {
+      "direction": "lower",
+      "maximum_degradation": 0.005,
+      "metric_id": "safety_violation"
+    }
+  ],
+  "minimum_observation_seconds": 3600,
+  "minimum_sample_size_per_cohort": 1000,
+  "policy_id": "company-canary-v1",
+  "require_sticky_assignment": true,
+  "schema_version": "1.0"
+}

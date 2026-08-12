@@ -1,0 +1,29 @@
+{
+	admin off
+	auto_https off
+	persist_config off
+}
+
+:9443 {
+	tls /run/secrets/quota_server_certificate /run/secrets/quota_server_private_key {
+		protocols tls1.2 tls1.3
+	}
+
+	@admin_routes path /healthz /readyz /admin/v1/leases*
+	handle @admin_routes {
+		reverse_proxy http://openai-quota-core:8080 {
+			header_up -Forwarded
+			header_up -X-Forwarded-For
+			header_up -X-Forwarded-Host
+			header_up -X-Forwarded-Proto
+			transport http {
+				dial_timeout 5s
+				response_header_timeout 310s
+				read_timeout 330s
+				write_timeout 30s
+			}
+		}
+	}
+
+	respond 404
+}

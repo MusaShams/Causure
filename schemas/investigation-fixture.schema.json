@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure draft investigation fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "generator_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fixture_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "draft_only": {
+      "const": true
+    },
+    "gate_eligible": {
+      "const": false
+    },
+    "causal_claims_inferred": {
+      "const": false
+    },
+    "clustering_basis": {
+      "const": "trace_identity"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "trace_artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+        },
+        "trace_source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "trace_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "span_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "manifest_sha256",
+        "trace_artifact_id",
+        "trace_source_sha256",
+        "trace_count",
+        "span_count"
+      ]
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "incident_claim",
+          "governing_requirement",
+          "independent_oracle",
+          "reproduction_outcomes",
+          "causal_attribution",
+          "proposed_change",
+          "negative_and_regression_controls"
+        ]
+      },
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueItems": true
+    },
+    "candidate_clusters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cluster_id": {
+            "type": "string",
+            "pattern": "^trace-[a-f0-9]{64}$"
+          },
+          "trace_ref": {
+            "type": "string",
+            "pattern": "^trace-sha256://[a-f0-9]{64}/traces/[a-f0-9]{64}$"
+          },
+          "trace_id_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "span_evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^trace-sha256://[a-f0-9]{64}/spans/[a-f0-9]{64}$"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "span_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "root_span_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "error_span_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "span_kind_counts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "enum": [
+                    "AGENT",
+                    "CHAIN",
+                    "EMBEDDING",
+                    "EVALUATOR",
+                    "GUARDRAIL",
+                    "LLM",
+                    "PROMPT",
+                    "RERANKER",
+                    "RETRIEVER",
+                    "TOOL"
+                  ]
+                },
+                "count": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "name",
+                "count"
+              ]
+            }
+          },
+          "status_code_counts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 2
+                },
+                "count": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "code",
+                "count"
+              ]
+            }
+          },
+          "model_identifiers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+            },
+            "uniqueItems": true
+          },
+          "provider_identifiers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+            },
+            "uniqueItems": true
+          },
+          "earliest_start_time_unix_nano": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "latest_end_time_unix_nano": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          },
+          "observed_duration_nano": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)$"
+          }
+        },
+        "required": [
+          "cluster_id",
+          "trace_ref",
+          "trace_id_sha256",
+          "span_evidence_refs",
+          "span_count",
+          "root_span_count",
+          "error_span_count",
+          "span_kind_counts",
+          "status_code_counts",
+          "model_identifiers",
+          "provider_identifiers"
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "generator_version",
+    "fixture_id",
+    "draft_only",
+    "gate_eligible",
+    "causal_claims_inferred",
+    "clustering_basis",
+    "source",
+    "missing_evidence",
+    "candidate_clusters"
+  ]
+}

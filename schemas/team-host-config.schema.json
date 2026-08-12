@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team service host configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "database": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "busy_timeout_ms": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 60000
+        }
+      },
+      "required": [
+        "path",
+        "busy_timeout_ms"
+      ]
+    },
+    "server": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "implementation": {
+          "const": "waitress"
+        },
+        "version": {
+          "const": "3.0.2"
+        },
+        "listen_host": {
+          "enum": [
+            "127.0.0.1",
+            "::1"
+          ]
+        },
+        "listen_port": {
+          "type": "integer",
+          "minimum": 1024,
+          "maximum": 65535
+        },
+        "trusted_external_scheme": {
+          "const": "https"
+        },
+        "threads": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "connection_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "backlog": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "channel_timeout_seconds": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 300
+        },
+        "max_request_header_bytes": {
+          "type": "integer",
+          "minimum": 8192,
+          "maximum": 65536
+        }
+      },
+      "required": [
+        "implementation",
+        "version",
+        "listen_host",
+        "listen_port",
+        "trusted_external_scheme",
+        "threads",
+        "connection_limit",
+        "backlog",
+        "channel_timeout_seconds",
+        "max_request_header_bytes"
+      ]
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "refresh_configuration_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "refresh_configuration_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "refresh_configuration_byte_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 524288
+        },
+        "trust_store_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+        },
+        "store_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{2,127}$"
+        },
+        "clock_skew_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 300
+        },
+        "refresh_timeout_seconds": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "refresh_interval_seconds": {
+          "type": "number",
+          "minimum": 60,
+          "maximum": 86400
+        },
+        "failure_retry_seconds": {
+          "type": "number",
+          "minimum": 30,
+          "maximum": 86400
+        },
+        "unknown_key_refresh_seconds": {
+          "type": "number",
+          "minimum": 300,
+          "maximum": 86400
+        }
+      },
+      "required": [
+        "refresh_configuration_path",
+        "refresh_configuration_sha256",
+        "refresh_configuration_byte_count",
+        "trust_store_path",
+        "store_id",
+        "clock_skew_seconds",
+        "refresh_timeout_seconds",
+        "refresh_interval_seconds",
+        "failure_retry_seconds",
+        "unknown_key_refresh_seconds"
+      ]
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_concurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "global_requests_per_window": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "per_source_requests_per_window": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            }
+          ]
+        },
+        "rate_window_seconds": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "max_tracked_sources": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "source_idle_seconds": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 86400
+        }
+      },
+      "required": [
+        "max_concurrency",
+        "global_requests_per_window",
+        "per_source_requests_per_window",
+        "rate_window_seconds",
+        "max_tracked_sources",
+        "source_idle_seconds"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "database",
+    "server",
+    "identity",
+    "admission"
+  ]
+}

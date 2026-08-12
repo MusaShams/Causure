@@ -1,0 +1,36 @@
+# Local version-control metadata
+\.git
+
+# Python caches and environments
+\.venv
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+
+# Local secrets and signing material
+\.env
+*.env
+*.clixml
+*.key
+*.p12
+*.pem
+*.pfx
+
+# Tool caches and generated artifacts
+\.coverage
+\.mypy_cache
+\.pytest_cache
+\.ruff_cache
+\build
+\dist
+\htmlcov
+\causure-report.md
+\causure-result.json
+\pilot-state
+\deploy\openai-quota-pilot\state
+*.db
+*.sqlite
+*.sqlite3
+*-shm
+*-wal

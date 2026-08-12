@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure review result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "engine_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "component": {
+      "enum": [
+        "system_prompt",
+        "tool_description",
+        "tool_schema",
+        "model_routing",
+        "retrieval_configuration",
+        "reviewer",
+        "verification_step",
+        "retry_policy",
+        "stopping_policy",
+        "memory_policy",
+        "tool_implementation",
+        "evaluator",
+        "environment",
+        "model_reasoning",
+        "requirement",
+        "other"
+      ]
+    },
+    "input_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decision": {
+      "enum": [
+        "approve",
+        "conditional_pass",
+        "reject",
+        "needs_evidence",
+        "human_review"
+      ]
+    },
+    "recommended_action": {
+      "enum": [
+        "patch",
+        "do_not_patch",
+        "collect_evidence",
+        "escalate"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metrics": {
+      "type": "object"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "fail",
+              "warning"
+            ]
+          },
+          "consequence": {
+            "enum": [
+              "none",
+              "conditional",
+              "needs_evidence",
+              "reject",
+              "human_review"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "details": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "code",
+          "status",
+          "consequence",
+          "message",
+          "details"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "engine_version",
+    "policy_name",
+    "case_id",
+    "case_title",
+    "component",
+    "input_sha256",
+    "reviewed_at",
+    "decision",
+    "recommended_action",
+    "summary",
+    "metrics",
+    "findings"
+  ]
+}

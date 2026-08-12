@@ -1,0 +1,74 @@
+name: Causure trusted case generator
+description: Generate a canonical case from a protected base checkout without executing candidate code.
+author: Causure contributors
+
+inputs:
+  trusted-project:
+    description: Protected base checkout beneath GITHUB_WORKSPACE containing configuration and reviewed adapter code.
+    required: true
+  candidate-root:
+    description: Separate exact-head candidate checkout beneath GITHUB_WORKSPACE, treated only as data.
+    required: true
+  output-directory:
+    description: New evidence directory relative to candidate-root.
+    required: false
+    default: .causure/trusted-generation
+  github-token:
+    description: Short-lived job token used only for bounded pull-request file discovery.
+    required: true
+  timeout-seconds:
+    description: Shared bounded discovery and adapter wall-clock timeout.
+    required: false
+    default: "60"
+  maximum-case-bytes:
+    description: Maximum canonical case output accepted from the reviewed adapter.
+    required: false
+    default: "5242880"
+
+outputs:
+  selection-status:
+    description: generated, existing_case, or no_match.
+    value: ${{ steps.generate.outputs.selection-status }}
+  component-id:
+    description: Selected configured component ID or not-applicable.
+    value: ${{ steps.generate.outputs.component-id }}
+  component-path:
+    description: Exact selected repository path or not-applicable.
+    value: ${{ steps.generate.outputs.component-path }}
+  configured-case:
+    description: Candidate-root-relative canonical case path or not-created.
+    value: ${{ steps.generate.outputs.configured-case }}
+  generation-receipt:
+    description: Candidate-root-relative minimized provenance receipt or not-created.
+    value: ${{ steps.generate.outputs.generation-receipt }}
+  report:
+    description: Candidate-root-relative immediate review report or not-created.
+    value: ${{ steps.generate.outputs.report }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up the pinned Python runtime
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      with:
+        python-version: "3.13"
+
+    - name: Generate the candidate-bound canonical case
+      id: generate
+      shell: pwsh
+      env:
+        CAUSURE_TRUSTED_PROJECT: ${{ inputs.trusted-project }}
+        CAUSURE_CANDIDATE_ROOT: ${{ inputs.candidate-root }}
+        CAUSURE_TRUSTED_OUTPUT_DIRECTORY: ${{ inputs.output-directory }}
+        CAUSURE_GITHUB_TOKEN: ${{ inputs.github-token }}
+        CAUSURE_TRUSTED_TIMEOUT_SECONDS: ${{ inputs.timeout-seconds }}
+        CAUSURE_TRUSTED_MAXIMUM_CASE_BYTES: ${{ inputs.maximum-case-bytes }}
+      run: |
+        $actionRoot = Split-Path -Parent $env:GITHUB_ACTION_PATH
+        $runner = Join-Path $actionRoot "scripts/run_trusted_case_generator_action.py"
+        python -I $runner
+        exit $LASTEXITCODE
+
+branding:
+  icon: shield
+  color: purple

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://causure.dev/schemas/windows-service-installation-receipt.schema.json",
+  "title": "Causure Windows service installation receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "package_version",
+    "service_name",
+    "runtime_path",
+    "manifest_path",
+    "manifest_sha256",
+    "host_configuration_path",
+    "host_configuration_sha256",
+    "host_configuration_byte_count",
+    "automatic_start",
+    "removal_started",
+    "operator_acl_backups"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "package_version": {
+      "const": "0.4.0a15"
+    },
+    "service_name": {
+      "const": "CausureTeam"
+    },
+    "runtime_path": {
+      "const": "C:\\Program Files\\Causure\\Team\\0.4.0a15"
+    },
+    "manifest_path": {
+      "const": "C:\\ProgramData\\Causure\\windows-service-bundle-manifest.json"
+    },
+    "manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "host_configuration_path": {
+      "$ref": "#/$defs/local_path"
+    },
+    "host_configuration_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "host_configuration_byte_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1048576
+    },
+    "automatic_start": {
+      "type": "boolean"
+    },
+    "removal_started": {
+      "type": "boolean"
+    },
+    "operator_acl_backups": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "access_sddl"
+        ],
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/local_path"
+          },
+          "access_sddl": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8192
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "local_path": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z]:"
+    }
+  }
+}

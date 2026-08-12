@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "result": "failed",
+  "qualification_id": "9ebb08eaafdb46f0a2cb274c01948baf",
+  "os": {
+    "caption": "Microsoft Windows 11 Pro",
+    "version": "10.0.26200.0",
+    "build": 26200,
+    "prepared_boot_time_utc": "2026-08-09T17:24:41.0000000+00:00",
+    "qualified_boot_time_utc": "2026-08-09T19:30:10.5000000+00:00",
+    "reboot_observed": true
+  },
+  "bundle": {
+    "package_version": "0.4.0a15",
+    "bundle_sha256": "16ee1b521d70fa0670e1c2099843bc8a2ae22dd9520772748d6345ec1b6daf04",
+    "manifest_sha256": "2a625fb8af7e7b0ef1bed119fab055772c5870660c40234c29fe342747b41eab",
+    "manifest_file_count": 3318
+  },
+  "startup_task": {
+    "one_shot": true,
+    "principal": "NT AUTHORITY\\SYSTEM",
+    "powershell_path": "C:\\Program Files\\WindowsApps\\Microsoft.PowerShell_7.6.4.0_x64__8wekyb3d8bbwe\\pwsh.exe",
+    "completion_script_sha256": "afa6bec4beb7e63212e280db6fe650c89639fe4b6cbbae303f62d9c583b3f45c",
+    "state_sha256": "33ea7ec54899feb07f2c7b3f8bacbc1bd55cdc02f21635e8681199fb729debcd",
+    "startup_delay_seconds": 30
+  },
+  "installation": {
+    "automatic_start_receipt": true,
+    "start_type": "automatic",
+    "delayed_automatic": true,
+    "service_account": "NT SERVICE\\ProofBeforePatchTeam",
+    "unrestricted_service_sid": true,
+    "exact_image_path": "C:\\Program Files\\ProofBeforePatch\\Team\\0.4.0a15\\pythonservice.exe",
+    "exact_recovery_policy": true,
+    "post_boot_non_crash_failure_flag": true
+  },
+  "cold_boot": {
+    "performed": true,
+    "automatic_process_id": 17348,
+    "automatic_process_started_at_utc": "2026-08-09T19:32:46.5861708+00:00",
+    "scm_running_at_utc": "2026-08-09T19:32:49.2282866+00:00",
+    "ready_at_utc": "2026-08-09T19:32:50.8794783+00:00",
+    "scm_running_to_ready_seconds": 1.651,
+    "health_status": 200,
+    "readiness_status": 200,
+    "readiness_gated_separately_from_scm": true
+  },
+  "network_unavailable": {
+    "method": "outbound block scoped to exact service executable with local trust withheld",
+    "workstation_adapter_changed": false,
+    "global_firewall_policy_changed": false,
+    "first_process_id": 15468,
+    "first_start_at_utc": "2026-08-09T19:32:55.3172473+00:00",
+    "first_stopped_at_utc": "2026-08-09T19:32:57.0474388+00:00",
+    "recovery_process_id": 15316,
+    "recovery_started_at_utc": "2026-08-09T19:34:58.5639897+00:00",
+    "recovery_elapsed_seconds": 121.517,
+    "second_stopped_at_utc": "2026-08-09T19:34:58.5687334+00:00",
+    "first_failure_restarted": true,
+    "second_failure_stopped_without_loop": true,
+    "first_failure_health_unavailable": true,
+    "first_failure_readiness_unavailable": true,
+    "second_failure_health_unavailable": true,
+    "second_failure_readiness_unavailable": true,
+    "non_crash_policy_effective_after_boot": true,
+    "exact_recovery_policy_remained": true,
+    "last_known_good_restored_exactly": true,
+    "firewall_rule_removed": true
+  },
+  "restoration": {
+    "recovery_policy_reapplied": true,
+    "health_status": 200,
+    "readiness_status": 200
+  },
+  "removal": {
+    "running_service_removed": true,
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "installed_manifest_absent": true,
+    "operator_paths_preserved": true,
+    "operator_acls_restored": true
+  },
+  "failed_stage": "cleanup",
+  "failure_type": "InvalidOperationException",
+  "failure_message": "cold-boot qualification cleanup was incomplete",
+  "started_at_utc": "2026-08-09T19:31:06.3953884+00:00",
+  "finished_at_utc": "2026-08-09T19:36:07.6774011+00:00",
+  "cleanup": {
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "installed_manifest_absent": true,
+    "qualification_root_removed": false,
+    "startup_task_absent": true,
+    "firewall_rule_absent": true,
+    "errors": [
+      "qualification root cleanup failed"
+    ]
+  }
+}

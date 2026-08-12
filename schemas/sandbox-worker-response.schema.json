@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure sandbox worker response",
+  "$defs": {
+    "replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "case_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "input_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "mode": {
+          "const": "replay"
+        },
+        "outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "trial_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "reproduced": {
+              "type": "boolean"
+            },
+            "evidence_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "latency_ms": {
+              "type": "number",
+              "minimum": 0
+            },
+            "cost_usd": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "trial_id",
+            "reproduced",
+            "evidence_ref",
+            "latency_ms",
+            "cost_usd"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "mode",
+        "case_id",
+        "input_ref",
+        "outcome"
+      ]
+    },
+    "evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "case_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "input_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "mode": {
+          "const": "evaluation"
+        },
+        "outcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "validation_case_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "passed": {
+              "type": "boolean"
+            },
+            "evidence_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "latency_ms": {
+              "type": "number",
+              "minimum": 0
+            },
+            "cost_usd": {
+              "type": "number",
+              "minimum": 0
+            },
+            "score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "validation_case_id",
+            "passed",
+            "evidence_ref",
+            "latency_ms",
+            "cost_usd"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "mode",
+        "case_id",
+        "input_ref",
+        "outcome"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/replay"
+    },
+    {
+      "$ref": "#/$defs/evaluation"
+    }
+  ]
+}

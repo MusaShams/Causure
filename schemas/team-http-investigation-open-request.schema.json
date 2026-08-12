@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Team HTTP investigation-open request",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "investigation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$"
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base64url": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 11184812,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "base64url"
+      ]
+    },
+    "cluster_id": {
+      "type": "string",
+      "pattern": "^trace-[a-f0-9]{64}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\u0000-\\u0008\\u000b\\u000c\\u000e-\\u001f\\u007f]+$"
+    },
+    "priority": {
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "critical"
+      ]
+    },
+    "expected_revision": {
+      "const": 0
+    },
+    "expected_head_sha256": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      ]
+    },
+    "retention_class_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+    }
+  },
+  "required": [
+    "investigation_id",
+    "fixture",
+    "cluster_id",
+    "title",
+    "priority",
+    "expected_revision",
+    "expected_head_sha256"
+  ]
+}

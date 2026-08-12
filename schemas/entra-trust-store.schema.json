@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Entra trust store",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "store_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{2,127}$"
+    },
+    "refreshed_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+    },
+    "tenants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "entra_tenant_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "team_tenant_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+          },
+          "issuer": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://",
+            "maxLength": 256
+          },
+          "audience": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "allowed_client_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "accepted_delegated_scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+            },
+            "uniqueItems": true,
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "accepted_application_roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+            },
+            "uniqueItems": true,
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "max_token_lifetime_seconds": {
+            "type": "integer",
+            "minimum": 300,
+            "maximum": 86400
+          },
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kid": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{1,256}$"
+                },
+                "kty": {
+                  "const": "RSA"
+                },
+                "use": {
+                  "const": "sig"
+                },
+                "alg": {
+                  "const": "RS256"
+                },
+                "n": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{342,1366}$"
+                },
+                "e": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{2,8}$"
+                }
+              },
+              "required": [
+                "kid",
+                "kty",
+                "use",
+                "alg",
+                "n",
+                "e"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "entra_tenant_id",
+          "team_tenant_id",
+          "issuer",
+          "audience",
+          "allowed_client_ids",
+          "accepted_delegated_scopes",
+          "accepted_application_roles",
+          "max_token_lifetime_seconds",
+          "keys"
+        ],
+        "anyOf": [
+          {
+            "properties": {
+              "accepted_delegated_scopes": {
+                "minItems": 1
+              }
+            }
+          },
+          {
+            "properties": {
+              "accepted_application_roles": {
+                "minItems": 1
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 100
+    }
+  },
+  "required": [
+    "schema_version",
+    "store_id",
+    "refreshed_at",
+    "expires_at",
+    "tenants"
+  ]
+}

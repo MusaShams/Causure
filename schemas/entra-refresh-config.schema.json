@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Causure Entra refresh configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "store_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{2,127}$"
+    },
+    "snapshot_ttl_seconds": {
+      "type": "integer",
+      "minimum": 3600,
+      "maximum": 86400
+    },
+    "tenants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "entra_tenant_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "team_tenant_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:+/@-]{0,127}$"
+          },
+          "issuer": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://",
+            "maxLength": 256
+          },
+          "jwks_uri": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://",
+            "maxLength": 512
+          },
+          "audience": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          },
+          "allowed_client_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 100
+          },
+          "accepted_delegated_scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+            },
+            "uniqueItems": true,
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "accepted_application_roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]{0,127}$"
+            },
+            "uniqueItems": true,
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "max_token_lifetime_seconds": {
+            "type": "integer",
+            "minimum": 300,
+            "maximum": 86400
+          }
+        },
+        "required": [
+          "entra_tenant_id",
+          "team_tenant_id",
+          "issuer",
+          "jwks_uri",
+          "audience",
+          "allowed_client_ids",
+          "accepted_delegated_scopes",
+          "accepted_application_roles",
+          "max_token_lifetime_seconds"
+        ],
+        "anyOf": [
+          {
+            "properties": {
+              "accepted_delegated_scopes": {
+                "minItems": 1
+              }
+            }
+          },
+          {
+            "properties": {
+              "accepted_application_roles": {
+                "minItems": 1
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 100
+    }
+  },
+  "required": [
+    "schema_version",
+    "store_id",
+    "snapshot_ttl_seconds",
+    "tenants"
+  ]
+}

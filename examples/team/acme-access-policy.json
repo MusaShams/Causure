@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "tenant_id": "tenant-acme-demo",
+  "policy_id": "access-acme-demo",
+  "revision": 1,
+  "effective_at": "2026-07-01T00:00:00Z",
+  "default_retention_class_id": "audit-365",
+  "memberships": [
+    {
+      "principal": {
+        "identity_provider": "entra:example",
+        "subject_id": "investigator-demo"
+      },
+      "roles": [
+        "investigator"
+      ]
+    },
+    {
+      "principal": {
+        "identity_provider": "entra:example",
+        "subject_id": "policy-admin-demo"
+      },
+      "roles": [
+        "policy_administrator"
+      ]
+    },
+    {
+      "principal": {
+        "identity_provider": "entra:example",
+        "subject_id": "approver-demo"
+      },
+      "roles": [
+        "approver"
+      ]
+    }
+  ],
+  "retention_classes": [
+    {
+      "class_id": "audit-365",
+      "minimum_days": 365
+    },
+    {
+      "class_id": "incident-30",
+      "minimum_days": 30
+    }
+  ]
+}

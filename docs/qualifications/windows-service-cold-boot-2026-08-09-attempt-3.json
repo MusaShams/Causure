@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "result": "failed",
+  "qualification_id": "9337b8fc05ec4cc896b4509ea829674f",
+  "failed_stage": "non_crash_recovery",
+  "failure_type": "TimeoutException",
+  "failure_message": "post-boot non-crash policy did not restart the service",
+  "started_at_utc": "2026-08-09T21:47:55.3886445+00:00",
+  "finished_at_utc": "2026-08-09T21:53:56.6107586+00:00",
+  "cleanup": {
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "installed_manifest_absent": true,
+    "qualification_root_removed": true,
+    "startup_task_absent": true,
+    "firewall_rule_absent": true,
+    "errors": []
+  }
+}

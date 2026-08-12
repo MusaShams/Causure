@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "result": "failed",
+  "qualification_id": "5380857db75443c3a50adee2d6d21707",
+  "failed_stage": "non_crash_recovery",
+  "failure_type": "InvalidOperationException",
+  "failure_message": "ProofBeforePatch Windows service command failed: 2",
+  "started_at_utc": "2026-08-09T21:31:38.3307975+00:00",
+  "finished_at_utc": "2026-08-09T21:34:28.8473739+00:00",
+  "cleanup": {
+    "service_absent": true,
+    "runtime_absent": true,
+    "receipt_absent": true,
+    "receipt_backup_absent": true,
+    "installed_manifest_absent": true,
+    "qualification_root_removed": true,
+    "startup_task_absent": true,
+    "firewall_rule_absent": true,
+    "errors": []
+  }
+}
