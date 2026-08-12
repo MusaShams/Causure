@@ -1,0 +1,59 @@
+name: Causure
+
+on:
+  pull_request:
+    types: [opened, ready_for_review, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+  checks: write
+
+jobs:
+  causure:
+    name: Causure gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the protected base
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.event.pull_request.base.repo.full_name }}
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: trusted-control
+          persist-credentials: false
+
+      - name: Check out the exact candidate head as data
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          persist-credentials: false
+
+      - name: Generate a candidate-bound case when configured
+        id: generation
+        uses: MusaShams/Causure/trusted-case-generator@8059c4b9d2e2aae5f6a4e2ab8a76b08b94f48eee
+        with:
+          trusted-project: trusted-control
+          candidate-root: candidate
+          github-token: ${{ github.token }}
+
+      - name: Review the generated or committed case
+        id: gate
+        uses: MusaShams/Causure@8059c4b9d2e2aae5f6a4e2ab8a76b08b94f48eee
+        with:
+          repository-root: candidate
+          output-directory: .causure/github
+          github-token: ${{ github.token }}
+
+      - name: Retain the exact evidence chain
+        if: ${{ always() && steps.gate.outputs.selection-status == 'reviewed' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: causure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            candidate/.causure/trusted-generation
+            candidate/.causure/github
+          if-no-files-found: error
+          retention-days: ${{ steps.gate.outputs.artifact-retention-days }}

@@ -1,0 +1,38 @@
+{
+  "adapter_directory": "adapters",
+  "artifact_directory": "artifacts",
+  "github": {
+    "artifact_retention_days": 14,
+    "components": [
+      {
+        "case_file": "evidence/generated-refund-tool.case.json",
+        "case_generator_adapter_id": "synthetic-case-generator",
+        "component": "tool_description",
+        "component_id": "refund-tool",
+        "paths": [
+          "agent/tools/refund-policy.txt"
+        ]
+      },
+      {
+        "case_file": "evidence/generated-refund-prompt.case.json",
+        "case_generator_adapter_id": "synthetic-case-generator",
+        "component": "system_prompt",
+        "component_id": "refund-prompt",
+        "paths": [
+          "agent/prompts/refund-policy.md"
+        ]
+      }
+    ]
+  },
+  "policy_file": "policy.json",
+  "project_id": "github-native-example",
+  "raw_trace_storage": "disabled",
+  "schema_version": "3.0",
+  "trusted_adapter_entry_points": [
+    {
+      "adapter_id": "synthetic-case-generator",
+      "entry_point": "synthetic_case_generator:generate",
+      "kind": "case_generator"
+    }
+  ]
+}
