@@ -28,17 +28,18 @@ stated otherwise, contributions intentionally submitted for inclusion are provid
 the contribution terms in Section 5 of that license. Mark material that is not a
 contribution clearly and do not submit code you are not authorized to license.
 
-## Source of record and public mirror
+## Source of record and public repository
 
 TFVC remains the authoritative source under
-[`ADR 0026`](docs/decisions/0026-publish-a-reviewed-github-mirror.md). GitHub is being
-prepared as a reviewed public mirror; it is not yet an independent development branch.
+[`ADR 0026`](docs/decisions/0026-publish-a-reviewed-github-mirror.md).
+[`MusaShams/Causure`](https://github.com/MusaShams/Causure) is the canonical public product
+repository and reviewed distribution surface; it is not yet an independent source of record.
 
 - Start public snapshots only from a clean, checked-in TFVC workspace.
 - Never publish `$tf`, generated reports, databases, prepared pilot state, PAT handoffs,
   credentials, or private signing material.
-- Do not merge a GitHub-only change first. A maintainer must reproduce an accepted change in
-  TFVC, validate and check it in there, then publish the reviewed result.
+- Do not merge a GitHub-only product change first. A maintainer must reproduce an accepted
+  change in TFVC, validate and check it in there, then publish the reviewed result.
 - Follow the [GitHub public-release guide](docs/github-public-release.md) for the current
   publication boundary.
 

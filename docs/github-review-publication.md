@@ -148,13 +148,13 @@ retention, and any future API publisher remain trusted controls. A verification 
 must be consumed in the same protected job rather than treated as a transferable bearer
 authorization.
 
-## Remaining P0-B work
+## Qualification status
 
-- generate a configured case through a separately trusted adapter workflow rather than
-  requiring an existing canonical case;
-- remotely qualify the configured composite Action from a full Git commit pin; and
-- exercise approve, abstain, and needs-evidence pull requests in a public synthetic example.
+Protected-base case generation, the full-commit-pinned composite Action, and public approve,
+reject/abstain, needs-evidence, and credential-free fork stories are implemented and
+qualified. The exact hosted runs and remaining company-specific trust boundary are recorded
+in the [public-release qualification](qualifications/causure-public-release-2026-08-13.json).
 
-The higher-level [GitHub Action guide](github-action.md) now covers the implemented canonical
-project configuration, bounded PR-file discovery, deterministic case selection, fork-safe
+The higher-level [GitHub Action guide](github-action.md) covers the canonical project
+configuration, bounded pull-request file discovery, deterministic case selection, fork-safe
 read-only token behavior, and caller-selected artifact retention.

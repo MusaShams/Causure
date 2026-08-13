@@ -227,17 +227,14 @@ collected from your agent.
 Today, a real OTLP/OpenInference JSON export can reach a redacted investigation and canonical
 gate decision without manually authored JSON. Replay, intervention, and control execution
 still comes from company-owned systems; the wizard records their references and outcomes but
-does not invent or autonomously execute them. The
-[P0-A unfamiliar-user usability test](p0a-usability-test.md) passed on the exact installed
-wheel in under five minutes with zero assistance; the minimized
-[human receipt](qualifications/p0a-unfamiliar-user-2026-08-11.json) preserves its scope and
-limitations. GitHub-native configured selection, protected case generation, and review are
-implemented. Private full-SHA hosted
-qualification covers same-repository approve, reject, and needs-evidence decisions plus the
-Dependabot no-match path; the
-[private receipt](qualifications/github-native-private-2026-08-11.json) preserves that
-limited claim. A separate
-[public receipt](qualifications/github-native-public-2026-08-11.json) records the real
-generator-backed fork run that stopped before adapter execution. Public same-repository
-decision runs remain. See the [productization roadmap](productization-roadmap.md) for the
-exact exit criteria.
+does not invent or autonomously execute them.
+
+The installed-wheel usability test passed in under five minutes with an unfamiliar
+participant and no assistance. The final public repository also exercised approve,
+reject/abstain, needs-evidence, required-check, and credential-free fork behavior. The
+[public-release qualification](qualifications/causure-public-release-2026-08-13.json) records
+the exact release, tests, hosted runs, artifacts, security state, and limitations.
+
+The next product milestone is a more discoverable trace-to-investigation experience,
+followed by guided execution of company replay and evaluation adapters. See the
+[productization roadmap](productization-roadmap.md) for that scope.

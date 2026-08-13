@@ -6,10 +6,10 @@ time.
 
 ## Public questions and defects
 
-After the GitHub repository is published, use its structured issue forms for reproducible
-bugs and bounded feature or research proposals. Include the exact version, environment, and
-synthetic reproduction. Do not post customer content, credentials, personal data, production
-traces, or signed artifact URLs.
+Use the public repository's structured issue forms for reproducible bugs and bounded feature
+or research proposals. Include the exact version, environment, and synthetic reproduction.
+Do not post customer content, credentials, personal data, production traces, or signed
+artifact URLs.
 
 ## Security reports
 

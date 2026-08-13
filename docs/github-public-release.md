@@ -6,46 +6,31 @@ remains authoritative until another accepted decision explicitly migrates it.
 
 ## Current publication state
 
-- GitHub automation, contribution forms, security guidance, and the deterministic release
-  boundary are maintained in TFVC.
-- The owner-authorized public mirror is
-  [`MusaShams/Causure`](https://github.com/MusaShams/Causure), with `main` as its default
-  branch. Published merge commit `c6500c0d6f3e59863d504e282cc81ae37823a1db`
-  passed the package build, Ubuntu/Windows Python 3.11-3.13 matrix, and CodeQL after merge.
-  TFVC remains the source of record.
-- Secret scanning, push protection, vulnerability alerts and security updates, private
-  vulnerability reporting, read-only workflow defaults, full-SHA enforcement for
-  GitHub-owned Actions, and the active `Protect main` ruleset are enabled. Public CodeQL
-  [run 31526179601](https://github.com/MusaShams/Causure/actions/runs/31526179601)
-  succeeded against the exact published `main`; its six findings were reviewed as three
-  deliberate test fixtures and three false-positive summary sinks. No CodeQL or secret
-  scanning alert remains open.
-- The root review Action and protected case-generator Action were invoked from exact commit
-  `9a57443e98b6c031bbadc48f863cdb25c92dc63e`. The
-  [private qualification receipt](qualifications/github-native-private-2026-08-11.json)
-  records same-repository approve, reject, and needs-evidence publications plus the
-  Dependabot no-match path. The separate
-  [public receipt](qualifications/github-native-public-2026-08-11.json) records public fork
-  [pull request 5](https://github.com/MusaShams/causure-examples/pull/5), whose exact base and
-  candidate checkouts succeeded before the fork guard stopped generation without executing
-  the protected adapter, ordinary review, custom Check Run publication, or artifact upload.
-- The first public scan surfaced a high-severity advisory on `cryptography==49.0.0`.
-  TFVC changeset 172 upgraded every package, pilot, CI, and service-bundle contract to
-  patched version `50.0.0`. Public
-  [pull request 9](https://github.com/MusaShams/Causure/pull/9) passed dependency review,
-  CI, and CodeQL before merging. GitHub then marked the advisory fixed, automatically closed
-  its superseded Dependabot pull request, and reported zero open Dependabot, CodeQL, or
-  secret-scanning alerts. The exact
+- The owner-authorized public mirror,
+  [`MusaShams/Causure`](https://github.com/MusaShams/Causure), is the canonical public product
+  repository. Its `main` branch contains one parentless commit, `Creation of Causure`, at
+  `8059c4b9d2e2aae5f6a4e2ab8a76b08b94f48eee`.
+- [`v0.4.0a18`](https://github.com/MusaShams/Causure/releases/tag/v0.4.0a18) is the initial
+  public alpha. Its wheel, normalized source archive, SBOM, architecture capture, portfolio
+  video, evidence matrix, and checksum manifest were anonymously downloaded and verified.
+- Approve, reject/abstain, needs-evidence, required-check, and credential-free fork behavior
+  were exercised against the final repository identity. The
+  [public-release qualification](qualifications/causure-public-release-2026-08-13.json)
+  records the exact runs, checks, assets, security state, and limitations.
+- The `Protect main` and exact-tag rulesets have no bypass actors. Secret scanning, push
+  protection, vulnerability alerts, Dependabot security updates, private vulnerability
+  reporting, read-only workflow defaults, and selected GitHub-owned Actions are enabled.
+  The release audit recorded zero open CodeQL, secret-scanning, or Dependabot alerts.
+- The earlier [public receipt](qualifications/github-native-public-2026-08-11.json) records
+  the first public-fork boundary. The
   [remediation receipt](qualifications/github-native-public-remediation-2026-08-11.json)
-  records the pull request, runs, merge, ruleset update, advisory closure, and limitations.
-- Apache-2.0 is selected under
-  [ADR 0027](decisions/0027-license-public-distribution-under-apache-2.0.md). The exact
-  standard terms are in [`LICENSE`](../LICENSE) and the Python metadata uses the matching
-  SPDX expression.
-- Repository creation, public visibility, the initial security baseline, CodeQL, private
-  same-repository qualification, and public fork qualification are complete. Fresh public
-  same-repository decision runs remain. Each later Git publication action remains a separate
-  owner-authorized action.
+  records the dependency repair; GitHub then marked the advisory fixed.
+- Apache-2.0 is the public license, with matching Python package metadata.
+- `MusaShams/Causure-history` is the private archived development-history repository, and
+  `MusaShams/causure-examples` is preserved privately. The controlled public qualification
+  fork is not the product repository.
+- TFVC remains the source of record under ADR 0026. Each later mirror publication, release,
+  or source-of-record change is a separate owner-authorized action.
 
 ## Release gate
 
@@ -78,8 +63,8 @@ python -m pip install -e ".[dev]"
 
 ## Owner decisions before any Git publication
 
-1. Confirm the GitHub owner and repository name. `MusaShams/Causure` is only the
-   current proposal.
+1. Confirm the GitHub owner and repository name. The completed alpha uses
+   `MusaShams/Causure`; any replacement publication must reconfirm its target identity.
 2. Confirm that GitHub starts as a private repository and that TFVC remains authoritative
    for the mirror period.
 3. Review every staged path and the full initial diff. Do not stage `$tf`, caches, reports,

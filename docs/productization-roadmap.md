@@ -38,7 +38,7 @@ that path.
 | Patch, abstain, request evidence, or escalate | Implemented semantics | `approve`, `conditional_pass`, `reject`, `needs_evidence`, and `human_review` | Outcomes need clearer product language and guided next actions |
 | Canary validation | Partial | Evidence-bound, predeclared sequential comparison | No deployment/feature-flag connector or automatic observation import |
 | OpenTelemetry/OpenInference trace importer | Implemented narrow connector | Redacted OTLP JSON collection, hashes, bounded draft fixture generation | File-based flow only; no polished live/platform import and selection UI |
-| GitHub pull-request integration | Public mirror; hosted same-repository, Dependabot, CodeQL, dependency-review, and public-fork boundary qualification complete | Canonical project config, protected-base case generation, automatic selection, closed PR/run/artifact receipts, composite gate, bounded Check Run publisher, decision annotations, fork/Dependabot modes, retained synthetic examples, and public repository controls | Fresh public same-repository decision runs remain |
+| GitHub pull-request integration | Public alpha qualification complete | Canonical project config, protected-base case generation, automatic selection, closed PR/run/artifact receipts, composite gate, bounded Check Run publisher, decision annotations, fork/Dependabot modes, public approve/reject/needs-evidence stories, and public-fork boundary qualification | Each company must still qualify its own adapters, policies, and repository configuration |
 | Incident investigation | Partial but locally usable | Candidate-only fixtures, guided redaction/selection workspace, immutable queue records, observations, assignment and closure | Hosted/self-serve collaboration and live connector selection remain open |
 | Evidence dashboard | Partial technical implementation | Read-only evidence, investigation, and joined change-case dashboards | Operational setup is heavy; no self-serve creation/editing or local demo mode |
 | Enterprise identity, policy, audit, and approvals | Strong pilot | Entra adapter, tenant policy, signed approval, hash-chained audit, SQLite CAS store | Single-host/reference boundaries; no supported shared production deployment |
@@ -219,8 +219,9 @@ working enterprise adapter, but do not make it the public onboarding path.
 - [x] Qualify dependency review on a public TFVC-backed pull request, require it through the
   protected `main` ruleset, close the cryptography advisory, and retain the exact
   [remediation receipt](qualifications/github-native-public-remediation-2026-08-11.json).
-- [ ] Publish and exercise the approve, abstain, and needs-evidence synthetic PR examples
-  publicly.
+- [x] Publish and exercise approve, reject/abstain, and needs-evidence synthetic pull-request
+  stories against the final public repository, with the exact hosted outcomes retained in
+  the [public-release qualification](qualifications/causure-public-release-2026-08-13.json).
 
 ## Milestone P0-C: trace-to-investigation onboarding
 
@@ -371,17 +372,18 @@ follow P0-A and P0-B so visitors immediately see the product rather than interna
 
 Required launch assets and current status:
 
-- [ ] Publish the final one-root-commit public repository and a versioned release through the
-  gated [clean-history runbook](clean-history-publication.md).
+- [x] Publish the final one-root-commit public repository and versioned `v0.4.0a18` release
+  through the gated [clean-history runbook](clean-history-publication.md).
 - [x] Retain the one-command demo. A hosted synthetic read-only demo remains optional when it
   can be published without adding an unnecessary service boundary.
-- [ ] Capture the short video showing incident, investigation, GitHub decision, and report;
-  the exact [90-second script](portfolio-demo-script.md) and privacy checklist are prepared.
-- [ ] Capture final-repository screenshots of the evidence matrix and pull-request check.
+- [x] Capture and publish the short video showing the incident, investigation, GitHub
+  decision, and report using the [90-second script](portfolio-demo-script.md) and privacy
+  checklist.
+- [x] Capture final-repository screenshots of the evidence matrix and pull-request check.
 - [x] Include one architecture diagram focused on the user flow in the
   [engineering case study](portfolio-case-study.md).
-- [ ] Publish and qualify approve, abstain, and needs-evidence example cases against the
-  final repository identity.
+- [x] Publish and qualify approve, reject/abstain, needs-evidence, and credential-free fork
+  cases against the final repository identity.
 - [x] State the security/privacy boundary and explicit production limits in the case study.
 - [x] Retain a concise case study covering the problem, design decisions, measured results,
   and remaining work.
@@ -407,7 +409,8 @@ Track these from the first external pilot:
 
 ## Do not build next
 
-Until P0-B and the portfolio release gate pass their remaining criteria, do not prioritize:
+P0-B and the portfolio release gate are complete. Until P0-C and P1-A produce a usable
+trace-to-experiment path and at least one external pilot exercises it, do not prioritize:
 
 - autonomous patch generation;
 - another provider-specific quota system;
