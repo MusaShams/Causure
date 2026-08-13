@@ -5,6 +5,11 @@ repository without pretending that previously public bytes can be revoked. Follo
 [ADR 0031](decisions/0031-publish-a-clean-public-history.md) and stop at every authorization
 gate.
 
+> **Completed for `v0.4.0a18`.** The final outcome is recorded in the
+> [public-release qualification](qualifications/causure-public-release-2026-08-13.json).
+> The steps below remain as the reproducible publication and archive procedure, not as an
+> outstanding launch checklist.
+
 GitHub's current documentation says that public forks remain public and detach when an
 upstream becomes private, that reusing a renamed repository's old name removes redirects,
 and that an Action does not follow a repository rename. Review the current

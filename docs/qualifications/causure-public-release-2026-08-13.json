@@ -1,0 +1,247 @@
+{
+  "schema_version": "1.0",
+  "qualification": "causure-public-release-gate5",
+  "performed_at": "2026-08-13T17:00:13.6804921Z",
+  "result": "passed",
+  "evidence_basis": "deterministic local validation, hosted GitHub qualification, anonymous post-release verification, security-control audit, archive restoration, and prior usability qualification",
+  "release": {
+    "repository": "https://github.com/MusaShams/Causure",
+    "release_url": "https://github.com/MusaShams/Causure/releases/tag/v0.4.0a18",
+    "release_id": 370069640,
+    "version": "0.4.0a18",
+    "tag": "v0.4.0a18",
+    "prerelease": true,
+    "annotated_tag": true,
+    "tag_object_sha": "89364e4ccf19cbf80ae13463f915870f0a6363ee",
+    "tag_verification": "unsigned",
+    "commit_sha": "8059c4b9d2e2aae5f6a4e2ab8a76b08b94f48eee",
+    "tree_sha": "cf67dbef1e174bdf958dda1988eeeb9a89262ba4",
+    "root_parent_count": 0,
+    "root_commit_message": "Creation of Causure",
+    "current_release_immutable": false,
+    "future_release_immutability_enabled": true,
+    "exact_tag_protection": {
+      "ruleset_id": 20808167,
+      "pattern": "refs/tags/v0.4.0a18",
+      "update_blocked": true,
+      "deletion_blocked": true,
+      "bypass_actor_count": 0
+    }
+  },
+  "artifacts": [
+    {
+      "filename": "causure-0.4.0a18-architecture.png",
+      "byte_count": 155696,
+      "sha256": "669829c026fa008d67188d3b076bc7df6912b28f2d9eaf776cf974f3b5ef60ed"
+    },
+    {
+      "filename": "causure-0.4.0a18-evidence-matrix.json",
+      "byte_count": 3627,
+      "sha256": "827261677cdbb2178463307964bfe9d4f25a0d2b5141584ff7d1cc4871cae60c"
+    },
+    {
+      "filename": "causure-0.4.0a18-portfolio-demo.mp4",
+      "byte_count": 3694348,
+      "sha256": "1f3947ff511a521268a349830470c0e98119386edb2161027e0fc11c926135b8"
+    },
+    {
+      "filename": "causure-0.4.0a18-py3-none-any.whl",
+      "byte_count": 372702,
+      "sha256": "e2764163cc3826c93bc250df863d879fe98e524edc60df9a40c62829ab59f74e"
+    },
+    {
+      "filename": "causure-0.4.0a18.spdx.json",
+      "byte_count": 4180,
+      "sha256": "0b938ec7e85a207ef424941c14832d61dcee3882503a6b111219f88cfaaf6b0f"
+    },
+    {
+      "filename": "causure-0.4.0a18.tar.gz",
+      "byte_count": 499230,
+      "sha256": "26a3b3b5d12935118effa3a5de3f90f16fb94e914e7357af9cf809aa54e1ca01"
+    },
+    {
+      "filename": "SHA256SUMS.txt",
+      "byte_count": 595,
+      "sha256": "cf535da10fd4b5f546a04d022b532d834b52c02a2eac43066cdba17f7e209e8f"
+    }
+  ],
+  "local_validation": {
+    "tests_passed": 556,
+    "expected_skips": 1,
+    "ruff_lint": "passed",
+    "ruff_format": "passed",
+    "public_release_scan": {
+      "status": "ready",
+      "filesystem_candidates": 312,
+      "blockers": 0,
+      "warnings": 0
+    },
+    "consumer_matrix": [
+      {
+        "python": "3.11",
+        "offline_wheel_install": "passed",
+        "import": "passed",
+        "cli_help": "passed",
+        "demo": "passed"
+      },
+      {
+        "python": "3.12",
+        "offline_wheel_install": "passed",
+        "import": "passed",
+        "cli_help": "passed",
+        "demo": "passed"
+      },
+      {
+        "python": "3.13",
+        "offline_wheel_install": "passed",
+        "import": "passed",
+        "cli_help": "passed",
+        "demo": "passed"
+      }
+    ],
+    "artifact_reproducibility": {
+      "wheel_reproduced_byte_for_byte": true,
+      "normalized_sdist_reproduced_byte_for_byte": true,
+      "normalized_sdist_rebuilt_exact_wheel": true,
+      "twine_check": "passed",
+      "wheel_record_hashes": "passed",
+      "archive_path_safety": "passed"
+    }
+  },
+  "hosted_decision_qualification": [
+    {
+      "scenario": "approve",
+      "pull_request": "https://github.com/MusaShams/Causure/pull/3",
+      "workflow_run": 31558968898,
+      "check_run": 93997183665,
+      "check_conclusion": "success",
+      "decision": "APPROVE"
+    },
+    {
+      "scenario": "abstain-reject",
+      "pull_request": "https://github.com/MusaShams/Causure/pull/4",
+      "workflow_run": 31558974020,
+      "check_run": 93997181683,
+      "check_conclusion": "failure",
+      "expected_fail_closed": true
+    },
+    {
+      "scenario": "needs-evidence",
+      "pull_request": "https://github.com/MusaShams/Causure/pull/5",
+      "workflow_run": 31558977558,
+      "run_attempt": 2,
+      "check_run": 93997592156,
+      "check_conclusion": "action_required"
+    },
+    {
+      "scenario": "credential-free-fork",
+      "pull_request": "https://github.com/MusaShams/Causure/pull/6",
+      "workflow_run": 31559578445,
+      "workflow_conclusion": "failure",
+      "protected_adapter_executed": false,
+      "custom_check_published": false,
+      "artifact_uploaded": false
+    }
+  ],
+  "required_checks": {
+    "qualification_pull_request": "https://github.com/MusaShams/Causure/pull/2",
+    "all_required_contexts_passed": true,
+    "strict": true,
+    "bypass_actor_count": 0,
+    "ruleset_id": 20725751,
+    "contexts": [
+      "package",
+      "test (ubuntu-latest, Python 3.11)",
+      "test (ubuntu-latest, Python 3.12)",
+      "test (ubuntu-latest, Python 3.13)",
+      "test (windows-latest, Python 3.11)",
+      "test (windows-latest, Python 3.12)",
+      "test (windows-latest, Python 3.13)",
+      "analyze (Python)",
+      "dependency-review"
+    ]
+  },
+  "security_controls": {
+    "open_codeql_alerts": 0,
+    "open_secret_scanning_alerts": 0,
+    "open_dependabot_alerts": 0,
+    "secret_scanning": "enabled",
+    "push_protection": "enabled",
+    "vulnerability_alerts": "enabled",
+    "dependabot_security_updates": "enabled",
+    "automated_security_fixes": true,
+    "private_vulnerability_reporting": true,
+    "actions_policy": "selected GitHub-owned actions",
+    "workflow_default_permissions": "read",
+    "workflow_can_approve_pull_requests": false,
+    "action_secrets": 0,
+    "dependabot_secrets": 0,
+    "repository_variables": 0,
+    "environments": 0
+  },
+  "anonymous_post_release_audit": {
+    "authentication": "none",
+    "repository_http_status": 200,
+    "release_http_status": 200,
+    "commit_count_all_refs": 1,
+    "annotated_tag_peeled_to_root": true,
+    "git_fsck": "passed",
+    "clean_history_verifier": "passed",
+    "public_release_scan": {
+      "status": "ready",
+      "git_candidates": 306,
+      "blockers": 0,
+      "warnings": 0
+    },
+    "release_assets_downloaded": 7,
+    "all_asset_hashes_matched": true,
+    "result": "passed"
+  },
+  "archive_restore": {
+    "bundles_verified": 4,
+    "hashes_matched": true,
+    "refs_matched": true,
+    "reachable_object_counts_matched": true,
+    "git_fsck": "passed",
+    "result": "passed"
+  },
+  "usability_qualification": {
+    "unfamiliar_participant_count": 1,
+    "completed_under_five_minutes": true,
+    "assistance_required": false,
+    "explained_both_demo_outcomes": true
+  },
+  "portfolio_evidence": {
+    "video_filename": "causure-0.4.0a18-portfolio-demo.mp4",
+    "duration_seconds": 94.83,
+    "resolution": "1920x1080",
+    "frame_rate_fps": 29.99,
+    "full_decode": "passed",
+    "privacy_scan": "passed",
+    "content_basis": "synthetic product demo and final public GitHub repository"
+  },
+  "evidence_chain": [
+    {
+      "gate": 3,
+      "sha256": "213d3894190ac8498af0806845e59c8ec2c36c50bb768a160d70221d867eb312",
+      "read_only": true
+    },
+    {
+      "gate": 4,
+      "sha256": "4ff7728c6a901a328acf852b8982d949b62901055c81d5beb9baed5a73a4ce62",
+      "read_only": true
+    },
+    {
+      "gate": "4-cleanup",
+      "sha256": "a98a023b22d0e6c51729253f30736ab80dc8346a44cc103e7d539040dcb3fe0b",
+      "read_only": true
+    }
+  ],
+  "claim_boundary": "Functional evidence-gated agent change control released as an initial public alpha; not a supported multi-tenant production control plane.",
+  "limitations": [
+    "The usability qualification covers one unfamiliar participant, one Windows environment, and the bound synthetic demo rather than a real company trace or adapter integration.",
+    "The annotated release tag is not cryptographically signed.",
+    "GitHub immutable releases were enabled after this release was published and apply only to future releases, so this release object is not GitHub-immutable; its exact tag is separately protected from update and deletion by an active no-bypass ruleset.",
+    "The alpha artifacts are published as GitHub release assets and have not been uploaded to PyPI."
+  ]
+}

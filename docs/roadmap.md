@@ -3,7 +3,8 @@
 This file tracks implemented technical capabilities. The prioritized remaining user and
 enterprise journey is maintained in the
 [productization roadmap](productization-roadmap.md). Its P0-A one-command experience is
-complete; P0-B's final public decision examples are the immediate product milestone.
+complete, P0-B and the portfolio release gate are complete, and P0-C trace-to-investigation
+onboarding is the immediate product milestone.
 
 ## 0.1 — Evidence gate foundation
 
@@ -55,7 +56,7 @@ ability to weaken policy thresholds.
 - [x] Recheck referenced artifact hashes and current build identity immediately before the
   gate task completes.
 
-## 0.3a — GitHub pull-request integration (in progress)
+## 0.3a — GitHub pull-request integration (complete for the public alpha)
 
 - [x] Closed offline publication and verification bound to exact PR head/base identity,
   repository IDs, event subject, workflow run/attempt, and case/result/report bytes.
@@ -82,7 +83,8 @@ ability to weaken policy thresholds.
 - [x] Public dependency-review qualification, required protected-main status, TFVC-first
   cryptography remediation, and zero-open-alert follow-up retained in the
   [remediation receipt](qualifications/github-native-public-remediation-2026-08-11.json).
-- [ ] Fresh public approve/abstain/needs-evidence example pull requests.
+- [x] Fresh public approve, reject/abstain, and needs-evidence example pull requests against
+  the final clean repository identity.
 
 ## 0.4 — Team service (in progress)
 
@@ -136,7 +138,7 @@ ability to weaken policy thresholds.
   family-wise sequential-look control, explicit noninferiority tolerances, and
   promote/continue/rollback/needs-evidence outcomes.
 
-## Public distribution (in progress)
+## Public distribution (initial alpha complete)
 
 - [x] Deterministic public-snapshot boundary for local metadata, secrets, generated state,
   required community files, and immutable GitHub Action references.
@@ -153,11 +155,15 @@ ability to weaken policy thresholds.
 - [x] Generator-backed public-fork qualification with exact hosted evidence.
 - [x] Public dependency-review and post-merge CI/CodeQL qualification with the surfaced
   cryptography advisory fixed from a TFVC-first source change.
-- [ ] Fresh public retained approve/abstain/needs-evidence examples.
+- [x] Fresh public retained approve, reject/abstain, and needs-evidence examples.
 - [x] Separately approved public visibility, secret scanning and push protection, private
   vulnerability reporting, pinned GitHub-owned Actions, active `main` ruleset, and successful
   public CodeQL qualification.
-- [ ] Later source-of-record migration decision if GitHub becomes authoritative.
+
+Future repository-governance decision:
+
+- [ ] Decide whether to migrate the source of record from TFVC to GitHub if GitHub becomes
+  the primary development system.
 
 ## Research track — PatchOrNotBench
 

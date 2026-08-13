@@ -290,23 +290,20 @@ causure github-check-run `
 The command first writes the token-free request and summary, then reads the token and
 performs the single API call. Its process exit still follows the underlying gate decision.
 
-## Remaining P0-B work
+## Public qualification
 
-The [2026-08-11 public qualification](qualifications/github-native-public-2026-08-11.json)
-records the authorized public mirror controls, successful CodeQL run, and real
-generator-backed fork pull request that failed before protected adapter execution. Remaining
-work is to publish and exercise fresh approve, abstain, and needs-evidence synthetic
-pull-request stories under the public repository configuration. The separate
-[public remediation qualification](qualifications/github-native-public-remediation-2026-08-11.json)
-records the first successful public dependency-review run, its addition to the protected
-`main` ruleset, the cryptography advisory closure, and green post-merge CI and CodeQL.
+The final public repository exercised the configured Action with retained approve,
+reject/abstain, and needs-evidence pull requests. A separate cross-repository pull request
+confirmed that the credential-free fork path stopped before protected adapter execution,
+custom Check Run publication, or artifact upload. Required package, OS/Python, CodeQL, and
+dependency-review checks also passed against the final repository identity.
 
-The credential-free local source fixtures and qualifier are in
-[`examples/github-native`](../examples/github-native/README.md). Their three passing local
-stories remain engineering evidence rather than remote GitHub qualification. The separate
-private qualification receipt supplies hosted evidence only for its stated same-repository
-and Dependabot scope. The public receipt independently closes the generator-backed fork
-gate; neither receipt substitutes for a company's own adapter and deployment qualification.
+The [public-release qualification](qualifications/causure-public-release-2026-08-13.json)
+binds those outcomes to their exact pull requests, workflow and check runs, root commit, and
+release. The reusable local fixtures remain in
+[`examples/github-native`](../examples/github-native/README.md). This qualification proves
+the shipped synthetic configuration; each company must still qualify its own adapters,
+policies, evidence quality, and repository controls.
 
 GitHub documents the
 [`GITHUB_TOKEN` installation-token boundary](https://docs.github.com/en/actions/concepts/security/github_token),

@@ -7,11 +7,10 @@ Causure is an early alpha and has not received an independent security review.
 Do not open a public work item containing exploit details, secrets, production traces, or
 personal data.
 
-Before GitHub publication, report the issue privately to the project owner through the
-Azure DevOps project's private communication channel. After publication, use **Security →
-Report a vulnerability** in the GitHub repository. That private vulnerability-reporting
-path is the only GitHub intake for exploit details; do not use a public issue or pull
-request.
+Use **Security → Report a vulnerability** in the public
+[`MusaShams/Causure`](https://github.com/MusaShams/Causure) repository. That private
+vulnerability-reporting path is the only GitHub intake for exploit details; do not use a
+public issue or pull request.
 
 Include:
 
@@ -24,9 +23,9 @@ The project owner should acknowledge a report before publishing a disclosure tim
 
 ## Supported versions
 
-Only the latest checked-in TFVC alpha and, after publication, its matching latest GitHub
-release snapshot are supported. A GitHub mirror commit that does not map to the current
-authoritative changeset is not a supported release.
+Only the latest published GitHub release is a supported public snapshot. TFVC remains the
+development source of record, but an unreleased TFVC changeset or an arbitrary GitHub commit
+is not a supported release.
 
 ## Sensitive data
 

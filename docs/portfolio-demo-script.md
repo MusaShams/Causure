@@ -3,6 +3,10 @@
 Use only synthetic Causure data and the final public repository. Do not show the TFVC PAT,
 local user paths, browser notifications, private archive, or generated machine state.
 
+The privacy-checked 94.83-second recording produced from this script is published with the
+[`v0.4.0a18` release](https://github.com/MusaShams/Causure/releases/tag/v0.4.0a18). This file
+is retained as the reproducible narration and capture checklist.
+
 ## Shot list and narration
 
 ### 0–12 seconds — the problem

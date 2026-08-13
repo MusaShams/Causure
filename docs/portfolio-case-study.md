@@ -76,27 +76,26 @@ and [protected generator decision](decisions/0029-run-case-generators-only-from-
 
 ## Measured engineering evidence
 
-- The P0-A completion candidate Classic CI run passed 556 tests with one expected
-  platform-specific skip, while Ruff `0.16.2` lint/format checks passed.
-- The deterministic public-snapshot checker accepted 306 candidate files with no blocker or
-  warning.
-- The exact `0.4.0a18` session wheel installed offline into a fresh virtual environment,
-  loaded only from that environment, produced both expected decisions, and created three
-  Markdown reports.
-- An unfamiliar terminal-capable participant used that exact wheel to finish the synthetic
-  demo in under five minutes with zero assistance, opened a generated Markdown report, and
-  correctly distinguished the causally supported narrow patch from the wrong-component,
-  overbroad change that failed a negative control.
-- Public Causure pull request 9 passed package build, six Python/OS matrix jobs, CodeQL, and
-  dependency review before merging; the same CI and CodeQL gates passed on the merge commit.
-- A public cross-repository fork run stopped before protected adapter execution, ordinary
-  review, custom Check Run publication, or artifact upload.
-- The recorded post-merge state had zero open Dependabot, CodeQL, or secret-scanning alerts.
+- The final release validation passed 556 tests with one expected platform-specific skip,
+  plus Ruff lint and formatting checks.
+- The public-snapshot checker accepted the final tracked tree with no blocker or warning.
+- The `0.4.0a18` wheel installed offline and completed the demo in clean Python 3.11, 3.12,
+  and 3.13 environments. Independent builds produced the same wheel byte-for-byte, and the
+  normalized source archive rebuilt that exact wheel.
+- An unfamiliar terminal-capable participant used a candidate wheel from the qualified
+  source revision to finish the synthetic demo in under five minutes with zero assistance,
+  opened a generated Markdown report, and correctly distinguished the causally supported
+  narrow patch from the wrong-component, overbroad change that failed a negative control.
+- Final-repository pull requests exercised successful approval, fail-closed rejection,
+  needs-evidence escalation, required package and OS/Python checks, CodeQL, dependency
+  review, and a credential-free fork that stopped before protected execution or publication.
+- An anonymous post-release audit cloned the one-root history and verified all seven
+  downloaded release assets by SHA-256. The final audit recorded zero open Dependabot,
+  CodeQL, or secret-scanning alerts.
 
-The exact hosted claims and limitations are in the
-[private Action receipt](qualifications/github-native-private-2026-08-11.json),
-[public fork receipt](qualifications/github-native-public-2026-08-11.json), and
-[public remediation receipt](qualifications/github-native-public-remediation-2026-08-11.json).
+The [public-release qualification](qualifications/causure-public-release-2026-08-13.json)
+records the exact repository identity, hosted runs, artifact hashes, security state, and
+limitations.
 
 ## Security and privacy boundary
 
@@ -121,8 +120,10 @@ independent security review remain P2 work. Company replay/evaluator quality and
 policy remain trusted inputs.
 
 The [P0-A human usability criterion](qualifications/p0a-unfamiliar-user-2026-08-11.json) is
-complete for one participant and one Windows environment. The public approve, abstain, and
-needs-evidence hosted examples will be requalified against the final clean public snapshot.
+complete for one participant and one Windows environment. Public approve, reject/abstain,
+needs-evidence, and credential-free fork examples are qualified against the final clean
+repository identity; each company must still qualify its own adapters, evidence quality,
+policies, and deployment environment.
 
 ## Try the bounded product path
 
