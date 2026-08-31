@@ -36,17 +36,17 @@ dependencies = []
 
 [project.optional-dependencies]
 approval = [
-  "cryptography==50.0.0",
+  "cryptography==50.0.1",
 ]
 attestation = [
-  "cryptography==50.0.0",
+  "cryptography==50.0.1",
 ]
 entra = [
-  "cryptography==50.0.0",
+  "cryptography==50.0.1",
   "PyJWT==2.13.0",
 ]
 service = [
-  "cryptography==50.0.0",
+  "cryptography==50.0.1",
   "PyJWT==2.13.0",
   "waitress==3.0.2",
 ]
@@ -54,17 +54,17 @@ quota-service = [
   "waitress==3.0.2",
 ]
 quota-pilot = [
-  "cryptography==50.0.0",
+  "cryptography==50.0.1",
   "waitress==3.0.2",
 ]
 windows-service = [
-  "cryptography==50.0.0",
+  "cryptography==50.0.1",
   "PyJWT==2.13.0",
   "pywin32==312; sys_platform == 'win32'",
   "waitress==3.0.2",
 ]
 dev = [
-  "cryptography==50.0.0",
+  "cryptography==50.0.1",
   "PyJWT==2.13.0",
   "pywin32==312; sys_platform == 'win32'",
   "ruff==0.16.2",
