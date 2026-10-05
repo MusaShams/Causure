@@ -43,11 +43,11 @@ attestation = [
 ]
 entra = [
   "cryptography==50.0.0",
-  "PyJWT==2.13.0",
+  "PyJWT==2.15.1",
 ]
 service = [
   "cryptography==50.0.0",
-  "PyJWT==2.13.0",
+  "PyJWT==2.15.1",
   "waitress==3.0.2",
 ]
 quota-service = [
@@ -59,13 +59,13 @@ quota-pilot = [
 ]
 windows-service = [
   "cryptography==50.0.0",
-  "PyJWT==2.13.0",
+  "PyJWT==2.15.1",
   "pywin32==312; sys_platform == 'win32'",
   "waitress==3.0.2",
 ]
 dev = [
   "cryptography==50.0.0",
-  "PyJWT==2.13.0",
+  "PyJWT==2.15.1",
   "pywin32==312; sys_platform == 'win32'",
   "ruff==0.16.2",
   "waitress==3.0.2",
